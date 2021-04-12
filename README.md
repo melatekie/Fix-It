@@ -121,18 +121,17 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 
 ## Wireframes
 
-<img align="right" src="./images/figma_walkthrough1.gif" width=300>
-
-<img src="./images/Compose.jpg" width=150><img src="./images/DetailPost.jpg" width=140><img src="./images/Home.jpg" width=140>
-<br/>
-
-<img src="./images/Login.jpg" width=150><img src="./images/ProfileEdit.jpg" width=150><img src="./images/ProfileUser.jpg" width=150><img src="./images/RegisterUser.jpg" width=150>
-
-
+<img src="images/wireframe1.png" width=600> <br/>
+<img src="images/wireframe2.png" width=600> <br/>
+<img src="images/wireframe3.png" width=600> <br/>
 
 ### [BONUS] Digital Wireframes & Mockups
+<img src="./images/Login.jpg" width=140><img src="./images/RegisterUser.jpg" width=140><img src="./images/Home.jpg" width=140><img src="./images/Compose.jpg" width=140> 
+<img src="./images/DetailPost.jpg" width=140><img src="./images/ProfileEdit.jpg" width=140><img src="./images/ProfileUser.jpg" width=140>
+<br/>
 
 ### [BONUS] Interactive Prototype
+<img src="./images/figma_walkthrough1.gif" width=300>
 
 ## Schema 
 [This section will be completed in Unit 9]
