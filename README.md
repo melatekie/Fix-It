@@ -120,8 +120,15 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+
+<img align="right" src="./images/figma_walkthrough1.gif" width=300>
+
+<img src="./images/Compose.jpg" width=150><img src="./images/DetailPost.jpg" width=140><img src="./images/Home.jpg" width=140>
+<br/>
+
+<img src="./images/Login.jpg" width=150><img src="./images/ProfileEdit.jpg" width=150><img src="./images/ProfileUser.jpg" width=150><img src="./images/RegisterUser.jpg" width=150>
+
+
 
 ### [BONUS] Digital Wireframes & Mockups
 
