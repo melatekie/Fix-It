@@ -141,3 +141,85 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
+
+## Schema
+### Models
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user account(default field) |
+   | firstName     | String   | name of user |
+   | lastName      | String   | name of user |
+   | email         | String   | email of user |
+   | username      | String   | alias of user |
+   | password      | String   | password of user |
+   | profileImage  | File     | user profile image |
+   | who       | Pointer to Professional    | professional model |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+
+#### Professional
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | ratings | Number | rating of a professional |
+   | zipcode | Number| zipcode of a professional |
+   | phone   | Number| phone of a professional |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+
+
+#### Post
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | Question     | String   | user question |
+   | commentsCount | Number   | number of comments that has been posted to an image |
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | solved     | Boolean | user can mark the post if it the question gets resolved |
+   | category     | String | category of user's post |
+
+
+### Networking
+#### List of network requests by screen
+   - Home Feed Screen
+      - (Read/GET) Query all posts order by each Post CreatedAt
+         ```java
+         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_KEY);
+        query.include(Post.KEY_USER);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e!=null){
+                    Log.e(TAG, "issue with getting posts",e);
+                    return;
+                }
+                for(Post post: posts){
+                    Log.i(TAG, "Post"+post.getDescription()+" username: "+ post.getUser().getUsername());
+                }
+                adapter.clear();
+                adapter.addAll(posts);
+                fragmentPostsBinding.swiperContainer.setRefreshing(false);
+
+                }
+            });
+        }
+        ```
+      - *(Create/POST) Create a new like on a post
+      - *(Delete) Delete existing like
+      - *(Create/POST) Create a new comment on a post
+      - *(Delete) Delete existing comment
+   - Create Post Screen
+      - (Create/POST) Create a new post object
+   - Profile Screen
+      - (Read/GET) Query logged in user object
+      - (Update/PUT) Update user profile image
