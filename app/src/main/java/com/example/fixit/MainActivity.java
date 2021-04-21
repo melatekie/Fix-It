@@ -88,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "post: likes " + post.getLikesCount());
                     Log.i(TAG, "post: comment " + post.getCommentsCount());
                     Log.i(TAG, "post: solved " + post.getSolved());
+
+                    post.setQuestion("GoodBye!");
+                    post.setKeyCategory("Heating");
+                    post.setLikesCount(20);
+                    post.setSolved(true);
+
+                    Log.i(TAG, "post: username " + post.getAuthor().getUsername());
+                    Log.i(TAG, "post: question " + post.getQuestion());
+                    Log.i(TAG, "post: category " + post.getCategory());
+                    Log.i(TAG, "post: likes " + post.getLikesCount());
+                    Log.i(TAG, "post: comment " + post.getCommentsCount());
+                    Log.i(TAG, "post: solved " + post.getSolved());
+
+
                 }
             }
         });

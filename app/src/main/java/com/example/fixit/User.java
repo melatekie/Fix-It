@@ -5,8 +5,15 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 @ParseClassName("User")
+//@Parcel
 public class User extends ParseObject {
+
+    //Parceler requirement
+    public User(){
+    }
 
     public static final String KEY_FIRST_NAME = "firstName";
     public static final String KEY_LAST_NAME = "lastName";
@@ -15,6 +22,8 @@ public class User extends ParseObject {
     public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_WHO = "who";
     public static final String KEY_IS_PROFESSIONAL = "isProfessional";
+
+
 
 
     //--------------------Getters and Setters----------------------

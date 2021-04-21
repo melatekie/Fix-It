@@ -5,8 +5,16 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 @ParseClassName("Post")
+//@Parcel
 public class Post extends ParseObject {
+
+    //Parceler requirement
+    public Post(){
+
+    }
     public static final String KEY_QUESTION = "question";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_AUTHOR = "author";
@@ -17,6 +25,8 @@ public class Post extends ParseObject {
     public static final String KEY_COMMENTS_COUNT = "commentsCount";
 
     public static final String KEY_SOLVED = "solved";
+
+
 
     //----------------------Getters and Setters--------------------------------
 
