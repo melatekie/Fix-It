@@ -1,5 +1,6 @@
 package com.example.fixit.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.fixit.EditProfileActivity;
 import com.example.fixit.R;
+import com.example.fixit.SignUpActivity;
 import com.example.fixit.databinding.FragmentPostsBinding;
 import com.example.fixit.databinding.FragmentProfileBinding;
 
@@ -46,5 +49,12 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = FragmentProfileBinding.bind(view);
+        fragmentProfileBinding.ivEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), EditProfileActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

@@ -6,6 +6,7 @@ def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -50,4 +51,6 @@ dependencies {
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.25.0"
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:${designSupportVersion}"
+
+
 }
