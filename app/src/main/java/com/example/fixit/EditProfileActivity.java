@@ -18,6 +18,13 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         activityEditProfileBinding = DataBindingUtil.setContentView(this,R.layout.activity_edit_profile);
-
+        //onClick for back button
+        activityEditProfileBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

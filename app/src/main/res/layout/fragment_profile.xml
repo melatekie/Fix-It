@@ -3,13 +3,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
         <import type="android.view.View"/>
         <variable
-            name="isProfessional"
-            type="java.lang.Boolean"/>
+            name="user"
+            type="com.example.fixit.User" />
     </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                         android:layout_centerHorizontal="false"
                         android:foregroundGravity="center_horizontal"
                         android:layout_gravity="center_horizontal"
-                        android:text="USERNAME"
+                        android:text="@{user.getKeyUsername()}"
                         android:textColor="@color/orange"
                         android:textStyle="bold" />
 
@@ -78,35 +78,25 @@
             android:layout_below="@id/ivProfileImage"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:text="FULL NAME"
-            android:visibility="@{isProfessional? View.VISIBLE : View.GONE}"
+            android:text="@{user.getFirstName()+ user.getLastName()}"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvFullName"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
-            android:visibility="@{isProfessional? View.VISIBLE : View.GONE}"
-            android:text="TITLE PLACEHOLDER"
-            android:textSize="18sp" />
 
         <RatingBar
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitle"
+            android:layout_below="@+id/tvFullName"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:numStars="5"
-            android:rating="3"
+            android:rating="5"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:visibility="@{isProfessional? View.VISIBLE : View.GONE}"/>
+
+            />
 
         <TextView
             android:id="@+id/Company"
@@ -117,7 +107,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="250dp"
             android:text="Company: "
-            android:visibility="@{isProfessional? View.VISIBLE : View.GONE}"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:textStyle="bold" />
 
         <TextView
@@ -128,7 +118,7 @@
             android:layout_marginStart="-245dp"
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/Company"
-            android:visibility="@{isProfessional? View.VISIBLE : View.GONE}"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:text="COMPANY PLACEHOLDER " />
 
         <TextView
@@ -139,6 +129,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="250dp"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:text="Phone: "
             android:textStyle="bold" />
         <TextView
@@ -148,6 +139,7 @@
             android:layout_marginStart="-245dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:layout_toEndOf="@+id/Phone"
             android:text="PHONE PLACEHOLDER " />
 
@@ -170,7 +162,7 @@
             android:layout_marginStart="-245dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/Email"
-            android:text="Email PLACEHOLDER " />
+            android:text="@{user.getEmail()}"/>
 
 
     </RelativeLayout>
