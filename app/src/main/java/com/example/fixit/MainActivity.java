@@ -7,14 +7,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.fixit.databinding.ActivityMainBinding;
 import com.example.fixit.fragments.PostsFragment;
 import com.example.fixit.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Testing
+    public static final String TAG = "MainActivity";
+
     private ActivityMainBinding activityMainBinding;
     private BottomNavigationView bottomNavigationView;
     @Override
@@ -46,6 +57,80 @@ public class MainActivity extends AppCompatActivity {
         });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
 
+        //queryPost();              //FOR TESTING PURPOSES
+
 
     }
+
+
+    //FOR TESTING PURPOSES
+    /*
+    private void queryPost(){
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        ParseQuery<User> queryUser = ParseQuery.getQuery(User.class);
+
+
+        query.include(Post.KEY_AUTHOR);
+        query.include(String.valueOf(Post.KEY_LIKES_COUNT));
+        query.findInBackground(new FindCallback<Post>(){
+
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issues with posts, e");
+                    return;
+                }
+
+                for (Post post : posts){
+                    Log.i(TAG, "post: username " + post.getAuthor().getUsername());
+                    Log.i(TAG, "post: question " + post.getQuestion());
+                    Log.i(TAG, "post: category " + post.getCategory());
+                    Log.i(TAG, "post: likes " + post.getLikesCount());
+                    Log.i(TAG, "post: comment " + post.getCommentsCount());
+                    Log.i(TAG, "post: solved " + post.getSolved());
+
+                    post.setQuestion("GoodBye!");
+                    post.setKeyCategory("Heating");
+                    post.setLikesCount(20);
+                    post.setSolved(true);
+
+                    Log.i(TAG, "post: username " + post.getAuthor().getUsername());
+                    Log.i(TAG, "post: question " + post.getQuestion());
+                    Log.i(TAG, "post: category " + post.getCategory());
+                    Log.i(TAG, "post: likes " + post.getLikesCount());
+                    Log.i(TAG, "post: comment " + post.getCommentsCount());
+                    Log.i(TAG, "post: solved " + post.getSolved());
+
+
+                }
+            }
+        });
+
+
+        queryUser.include(User.KEY_LAST_NAME);
+        queryUser.include(User.KEY_FIRST_NAME);
+        queryUser.include(User.KEY_WHO);
+
+        queryUser.findInBackground(new FindCallback<User>() {
+            @Override
+            public void done(List<User> users, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issues with users, e");
+                    return;
+                }
+
+                for (User user : users){
+                    Log.i(TAG, "user: first " + user.getFirstName() );
+                    Log.i(TAG, "user: last " + user.getLastName() );
+                    Log.i(TAG, "user: email " + user.getEmail() );
+                    Log.i(TAG, "user: " + user.getWho().getUsername());
+                }
+            }
+        });
+
+    } */
+
+
+
+
 }
