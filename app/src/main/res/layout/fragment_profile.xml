@@ -40,7 +40,6 @@
                         android:layout_centerHorizontal="false"
                         android:foregroundGravity="center_horizontal"
                         android:layout_gravity="center_horizontal"
-                        android:layout_alignParentCenter="true"
                         android:text="USERNAME"
                         android:textColor="@color/orange"
                         android:textStyle="bold" />
