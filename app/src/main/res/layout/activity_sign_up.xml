@@ -291,7 +291,9 @@
                                     android:id="@+id/etState"
                                     android:layout_width="93dp"
                                     android:layout_height="wrap_content"
-                                    android:inputType="textCapCharacters" />
+                                    android:inputType="textCapCharacters"
+                                    android:maxLength="2"
+                                    android:textAllCaps="true"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -309,7 +311,8 @@
                                     android:id="@+id/etZipcode"
                                     android:layout_width="93dp"
                                     android:layout_height="wrap_content"
-                                    android:inputType="textPostalAddress" />
+                                    android:inputType="number"
+                                    android:maxLength="5"/>
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <Button

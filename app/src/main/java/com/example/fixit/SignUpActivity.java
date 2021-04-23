@@ -31,10 +31,12 @@ public class SignUpActivity extends AppCompatActivity {
         smSwitch = binding.smSwitch;
         rlUser = binding.rlUser;
         rlProf = binding.rlProfessional;
+        btnUser = binding.btnUserSignUp;
+        btnProf = binding.btnProfSignUp;
         toolbar = binding.topAppBar;
         setSupportActionBar(toolbar);
 
-
+        //switch between user and professional
         smSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
