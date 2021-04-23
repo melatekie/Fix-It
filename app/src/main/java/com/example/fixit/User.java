@@ -1,6 +1,15 @@
 package com.example.fixit;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -18,7 +27,8 @@ public class User extends ParseObject {
     public static final String KEY_FIRST_NAME = "firstName";
     public static final String KEY_LAST_NAME = "lastName";
     public static final String KEY_EMAIL = "email";
-
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_PASSWORD = "password";
     public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_WHO = "who";
     public static final String KEY_IS_PROFESSIONAL = "isProfessional";
@@ -68,5 +78,44 @@ public class User extends ParseObject {
         put(KEY_WHO, who);
     }
 
+    //IsProfessional
+    public Boolean getKeyIsProfessional() { return getBoolean(KEY_IS_PROFESSIONAL); }
+    public void setIsProfessional(boolean isProfessional) { put(KEY_IS_PROFESSIONAL, isProfessional); }
+
+    //username
+    public String getKeyUsername() { return getString(KEY_USERNAME); }
+    public void setUsername(String username){
+        put(KEY_USERNAME, username);
+    }
+
+    //password
+    public String getKeyPassword() { return getString(KEY_PASSWORD); }
+    public void setPassword(String password){
+        put(KEY_PASSWORD, password);
+    }
+
+    @BindingAdapter({"android:loadImage"})
+    public static void loadImage(ImageView img, User user ) {
+
+        if (user.getProfileImage() != null) {
+
+            user.getProfileImage() .getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        img.setImageBitmap(bmp);
+                    }
+                }
+            });
+        } else {
+            if(user.getKeyIsProfessional()){
+                img.setImageResource(R.drawable.professional_img);
+            }
+            else {
+                img.setImageResource(R.drawable.default_img);
+            }
+        }
+    }// load image
 
 }

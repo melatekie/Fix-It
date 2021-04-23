@@ -1,24 +1,39 @@
 package com.example.fixit.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.fixit.EditProfileActivity;
+import com.example.fixit.LoginActivity;
+import com.example.fixit.MainActivity;
+import com.example.fixit.Post;
 import com.example.fixit.R;
+import com.example.fixit.SignUpActivity;
+import com.example.fixit.User;
 import com.example.fixit.databinding.FragmentPostsBinding;
 import com.example.fixit.databinding.FragmentProfileBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.parceler.Parcels;
+
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+
+
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding fragmentProfileBinding;
@@ -46,5 +61,34 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = FragmentProfileBinding.bind(view);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        User user = new User();
+
+        user.setEmail(currentUser.getEmail());
+        user.setUsername(currentUser.getUsername());
+        user.setFirstName(currentUser.getString("firstName"));
+        user.setLastName(currentUser.getString("lastName"));
+        user.setIsProfessional(currentUser.getBoolean("isProfessional"));
+        if(user.getParseFile("profileImage")!=null){
+            user.setImage(user.getParseFile("profileImage"));
+        }
+
+        fragmentProfileBinding.setUser(user);
+        fragmentProfileBinding.ivEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), EditProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
+                startActivity(i);
+            }
+        });
+        fragmentProfileBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 }
