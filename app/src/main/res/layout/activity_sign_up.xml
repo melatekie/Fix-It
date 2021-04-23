@@ -13,53 +13,320 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:liftOnScroll="true">
 
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="Register"
+                    app:navigationIcon="@drawable/ic_back" />
+
             </com.google.android.material.appbar.AppBarLayout>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etUsernameLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginTop="60dp"
-                android:hint="@string/username">
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etUsername"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
-            <Button
-                android:id="@+id/btnLogIn"
+                    <LinearLayout
+                        android:id="@+id/llTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp" >
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/etUsernameLayout"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:text="Log In"
-                android:enabled="false"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etFirstLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_alignParentStart="true"
+                                android:layout_width="143dp"
+                                android:layout_height="wrap_content"
+                                android:hint="First name">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_anchor="@+id/appBarLayout"
-                app:layout_anchorGravity="center"
-                app:navigationIcon="@drawable/ic_back"
-                app:title="Register" />
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etFirst"
+                                    android:layout_width="143dp"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etLastLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_alignParentEnd="true"
+                                android:layout_width="143dp"
+                                android:layout_height="wrap_content"
+                                android:hint="Last name">
 
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etLast"
+                                    android:layout_width="143dp"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </RelativeLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/etUsernameLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="@string/username">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etUsername"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/etEmailLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Email">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEmail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textEmailAddress"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/passwordLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Password"
+                            app:endIconMode="password_toggle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/etPassword"
+                                android:inputType="textPassword"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/confirmPasswordLayout"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:hint="Confirm password"
+                            app:endIconMode="password_toggle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/etConfirmPassword"
+                                android:inputType="textPassword"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/smSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Professional  "
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/backdrop"
+                        >
+                        <Button
+                            android:id="@+id/btnUserSignUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginBottom="188dp"
+                            android:text="User Sign Up"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlProfessional"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backdrop"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginEnd="50dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etJobTitleLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:hint="Job title"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etJobTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etPhoneLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etJobTitleLayout"
+                                android:layout_marginTop="10dp"
+                                android:hint="Contact number"
+                                app:boxBackgroundColor="@color/white"
+                                app:prefixText="+1">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etPhone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="phone"
+                                    android:maxLength="10" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etCompanyLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_below="@+id/etPhoneLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:hint="Company"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etCompany"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etStreetLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="190dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etCompanyLayout"
+                                android:layout_marginTop="10dp"
+                                android:hint="Work street address"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etStreet"
+                                    android:layout_width="190dp"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etUnitLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etCompanyLayout"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:hint="Unit"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etUnit"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etCityLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="93dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etStreetLayout"
+                                android:layout_marginTop="10dp"
+                                android:hint="City"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etCity"
+                                    android:layout_width="93dp"
+                                    android:layout_height="wrap_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etStateLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="93dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etStreetLayout"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="10dp"
+                                android:hint="State"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etState"
+                                    android:layout_width="93dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textCapCharacters" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/etZipcodeLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="93dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/etStreetLayout"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="10dp"
+                                android:hint="Zipcode"
+                                app:boxBackgroundColor="@color/white">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etZipcode"
+                                    android:layout_width="93dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPostalAddress" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Button
+                                android:id="@+id/btnProfSignUp"
+                                android:layout_below="@+id/etZipcodeLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="50dp"
+                                android:layout_marginTop="50dp"
+                                android:text="Professional Sign Up"
+                                />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
     </RelativeLayout>
+
 </layout>
