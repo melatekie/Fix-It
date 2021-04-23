@@ -6,11 +6,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.fixit.databinding.ActivityMainBinding;
+import com.example.fixit.fragments.LogoutFragment;
 import com.example.fixit.fragments.PostsFragment;
 import com.example.fixit.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,6 +20,7 @@ import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -46,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_profile:
                         fragment = new ProfileFragment();
                         break;
+                    case R.id.action_logout:
+                        fragment = new LogoutFragment();
+                        ParseUser.logOut();
+                        ParseUser currentLoggedUser = ParseUser.getCurrentUser();
+                        goLoginActivity();
+                        break;
+
                     default:
                         fragment = new ProfileFragment();// placeholder
                         // log out here
@@ -60,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
         //queryPost();              //FOR TESTING PURPOSES
 
 
+    }
+
+    //Logs off current User
+    private void goLoginActivity(){
+        Intent i = new Intent(this,LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
 
@@ -100,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "post: likes " + post.getLikesCount());
                     Log.i(TAG, "post: comment " + post.getCommentsCount());
                     Log.i(TAG, "post: solved " + post.getSolved());
-
-
                 }
             }
         });
