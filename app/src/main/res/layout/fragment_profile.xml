@@ -66,10 +66,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_width="100dp"
+            android:loadImage="@{user.getProfileImage()}"
             android:layout_height="100dp"
-            tools:srcCompat="@tools:sample/avatars"
             android:foreground="@drawable/rounded_fig"/>
-
 
         <TextView
             android:id="@+id/tvFullName"
@@ -78,7 +77,8 @@
             android:layout_below="@id/ivProfileImage"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:text="@{user.getFirstName()+ user.getLastName()}"
+
+            android:text="@{user.getFirstName()+ ' '+user.getLastName()}"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -91,6 +91,7 @@
             android:layout_below="@+id/tvFullName"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:numStars="5"
             android:rating="5"
             android:scaleX="1.5"

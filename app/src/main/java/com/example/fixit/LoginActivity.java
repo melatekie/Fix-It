@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         //If the current user is not empty, then proceed to the main activity
         if (ParseUser.getCurrentUser() != null){
             goMainActivity();
+            return;
         }
 
         //Upon clicking the signup button
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Otherwise, proceed to mainActivity
                 goMainActivity();
                 Toast.makeText(LoginActivity.this,"You are now in!", Toast.LENGTH_SHORT).show();
+                return;
             }
         });
 

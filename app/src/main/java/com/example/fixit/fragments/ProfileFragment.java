@@ -25,6 +25,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 /**
@@ -59,10 +61,23 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragmentProfileBinding = FragmentProfileBinding.bind(view);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        User user = new User();
+
+        user.setEmail(currentUser.getEmail());
+        user.setUsername(currentUser.getUsername());
+        user.setFirstName(currentUser.getString("firstName"));
+        user.setLastName(currentUser.getString("lastName"));
+        user.setImage(currentUser.getParseFile("profileImage"));
+        user.setIsProfessional(currentUser.getBoolean("isProfessional"));
+        user.setPassword(currentUser.getString("password"));
+
+        fragmentProfileBinding.setUser(user);
         fragmentProfileBinding.ivEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), EditProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
                 startActivity(i);
             }
         });
@@ -73,14 +88,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(i);
             }
         });
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        User user = new User();
-//        user.setEmail(currentUser.getString(user.KEY_EMAIL));
-        Log.i("ProfileFragment", currentUser.getEmail());
-//        user.setFirstName(currentUser.getString(user.KEY_FIRST_NAME));
-//        user.setLastName(currentUser.getString(user.KEY_LAST_NAME));
-//        user.setUsername(currentUser.getString(user.KEY_USERNAME));
-//        user.setIsProfessional(currentUser.getBoolean(user.KEY_IS_PROFESSIONAL));
-//        fragmentProfileBinding.setUser(user);
+
     }
 }

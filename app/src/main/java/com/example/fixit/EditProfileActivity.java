@@ -10,6 +10,8 @@ import android.view.View;
 import com.example.fixit.databinding.ActivityEditProfileBinding;
 import com.example.fixit.databinding.ActivityLoginBinding;
 
+import org.parceler.Parcels;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private ActivityEditProfileBinding activityEditProfileBinding;
@@ -26,5 +28,24 @@ public class EditProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        activityEditProfileBinding.setUser(user);
+        activityEditProfileBinding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.getKeyIsProfessional()){ // is professional
+                    //https://github.com/liulanz/Instagram-Parse-App/blob/master/app/src/main/java/com/example/instagram/fragments/ComposeFragment.java
+                }
+                else{               // not professional
+
+                }
+
+                goMainActivity();
+            }
+        });
+    }
+    private void goMainActivity() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }

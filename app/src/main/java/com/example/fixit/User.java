@@ -1,6 +1,15 @@
 package com.example.fixit;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -85,5 +94,23 @@ public class User extends ParseObject {
         put(KEY_PASSWORD, password);
     }
 
+    @BindingAdapter({"android:loadImage"})
+    public static void loadImage(ImageView img, ParseFile profileImg ) {
+
+        if (profileImg != null) {
+
+            profileImg.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if (e == null) {
+                        Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                        img.setImageBitmap(bmp);
+                    }
+                }
+            });
+        } else {
+            img.setImageResource(R.drawable.default_img);
+        }
+    }// load image
 
 }
