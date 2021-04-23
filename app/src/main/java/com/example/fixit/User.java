@@ -95,11 +95,11 @@ public class User extends ParseObject {
     }
 
     @BindingAdapter({"android:loadImage"})
-    public static void loadImage(ImageView img, ParseFile profileImg ) {
+    public static void loadImage(ImageView img, User user ) {
 
-        if (profileImg != null) {
+        if (user.getProfileImage() != null) {
 
-            profileImg.getDataInBackground(new GetDataCallback() {
+            user.getProfileImage() .getDataInBackground(new GetDataCallback() {
                 @Override
                 public void done(byte[] data, ParseException e) {
                     if (e == null) {
@@ -109,7 +109,12 @@ public class User extends ParseObject {
                 }
             });
         } else {
-            img.setImageResource(R.drawable.default_img);
+            if(user.getKeyIsProfessional()){
+                img.setImageResource(R.drawable.professional_img);
+            }
+            else {
+                img.setImageResource(R.drawable.default_img);
+            }
         }
     }// load image
 

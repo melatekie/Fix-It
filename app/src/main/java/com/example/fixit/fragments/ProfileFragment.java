@@ -1,6 +1,7 @@
 package com.example.fixit.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.fixit.EditProfileActivity;
 import com.example.fixit.LoginActivity;
@@ -23,17 +25,15 @@ import com.example.fixit.databinding.FragmentPostsBinding;
 import com.example.fixit.databinding.FragmentProfileBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding fragmentProfileBinding;
@@ -68,9 +68,10 @@ public class ProfileFragment extends Fragment {
         user.setUsername(currentUser.getUsername());
         user.setFirstName(currentUser.getString("firstName"));
         user.setLastName(currentUser.getString("lastName"));
-        user.setImage(currentUser.getParseFile("profileImage"));
         user.setIsProfessional(currentUser.getBoolean("isProfessional"));
-        user.setPassword(currentUser.getString("password"));
+        if(user.getParseFile("profileImage")!=null){
+            user.setImage(user.getParseFile("profileImage"));
+        }
 
         fragmentProfileBinding.setUser(user);
         fragmentProfileBinding.ivEditProfile.setOnClickListener(new View.OnClickListener() {

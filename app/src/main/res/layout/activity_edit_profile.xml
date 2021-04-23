@@ -3,20 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
-
-    <data xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
         <import type="android.view.View"/>
         <variable
             name="user"
             type="com.example.fixit.User" />
 
     </data>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".EditProfileActivity">
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/fragmentLayout"
             android:layout_width="match_parent"
@@ -47,10 +44,6 @@
 
 
                 </com.google.android.material.appbar.MaterialToolbar>
-
-
-
-
             </com.google.android.material.appbar.AppBarLayout>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -60,8 +53,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:loadImage="@{user.getProfileImage()}"
+            android:layout_height="100dp"
+            android:loadImage="@{user}"
             android:foreground="@drawable/rounded_fig"/>
 
 
@@ -73,7 +66,6 @@
             android:layout_below="@+id/ivProfileImage"
             android:layout_marginStart="45dp"
             android:layout_marginTop="20dp"
-
             android:hint="FIRST NAME">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFirstName"
@@ -99,8 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -149,6 +139,7 @@
             android:layout_below="@+id/phoneLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
+            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:layout_marginTop="10dp"
             android:hint="EMAIL"
             app:startIconDrawable="@android:drawable/sym_action_email">
@@ -173,7 +164,6 @@
             app:startIconDrawable="@drawable/ic_password">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
-                android:text="@{user.getKeyPassword()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>

@@ -39,6 +39,12 @@ public class EditProfileActivity extends AppCompatActivity {
                 else{               // not professional
 
                 }
+                if(activityEditProfileBinding.etPassword.getText().toString()==""){
+                    // no change in password
+                }
+                else{
+                    //update new password
+                }
 
                 goMainActivity();
             }
