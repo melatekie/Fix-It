@@ -133,15 +133,6 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 ### [BONUS] Interactive Prototype
 <img src="./images/figma_walkthrough1.gif" width=300>
 
-## Schema 
-[This section will be completed in Unit 9]
-### Models
-[Add table of models]
-### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
-
 ## Schema
 ### Models
 #### User
@@ -155,7 +146,6 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
    | username      | String   | alias of user |
    | password      | String   | password of user |
    | profileImage  | File     | user profile image |
-   | who       | Pointer to Professional    | professional model |
    | createdAt     | DateTime | date when post is created (default field) |
    | updatedAt     | DateTime | date when post is last updated (default field) |
 
@@ -164,9 +154,16 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | objectId      | String   | unique id for the user post (default field) |
+   | user       | Pointer to User    | user model |
    | ratings | Number | rating of a professional |
-   | zipcode | Number| zipcode of a professional |
-   | phone   | Number| phone of a professional |
+   | title     | String   | job title of user |
+   | company     | String   | company name of user |
+   | street     | String   | work street address of user |
+   | unit     | String   | unit for address of user |
+   | city     | String   | city of company |
+   | state     | String   | state of company |
+   | zipcode | Number| zipcode of company |
+   | phone   | Number| work phone number of user |
    | createdAt     | DateTime | date when post is created (default field) |
    | updatedAt     | DateTime | date when post is last updated (default field) |
 

@@ -28,7 +28,6 @@ public class User extends ParseObject {
     public static final String KEY_LAST_NAME = "lastName";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
     public static final String KEY_PROFILE_IMAGE = "profileImage";
     public static final String KEY_WHO = "who";
     public static final String KEY_IS_PROFESSIONAL = "isProfessional";
@@ -88,11 +87,6 @@ public class User extends ParseObject {
         put(KEY_USERNAME, username);
     }
 
-    //password
-    public String getKeyPassword() { return getString(KEY_PASSWORD); }
-    public void setPassword(String password){
-        put(KEY_PASSWORD, password);
-    }
 
     @BindingAdapter({"android:loadImage"})
     public static void loadImage(ImageView img, User user ) {
