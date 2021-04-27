@@ -8,6 +8,7 @@ App Design Project
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Sprint Progress](#Sprint-Progress)
 
 ## Overview
 ### Description
@@ -220,3 +221,18 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
+
+## Sprint Progress
+### Sprint 1
+#### Items Completed
+* Created framework
+* Added default styles/color and icons
+* Added Login and Data models
+* Connected to Parse
+
+#### Walkthrough 
+<img src="https://user-images.githubusercontent.com/77254935/115634617-f8c10600-a2d7-11eb-826b-1ea302026e52.gif" width=250>
+
+### Sprint 2
+### Sprint 3
+### Sprint 4
