@@ -61,10 +61,10 @@ public class Professional extends ParseObject {
 
     //phone
     public Number getPhone(){
-        return getNumber(String.valueOf(KEY_PHONE));
+        return getNumber(KEY_PHONE);
     }
     public void setPhone(Number phone){
-        put(String.valueOf(KEY_PHONE),phone);
+        put(KEY_PHONE,phone);
     }
 
     //street name

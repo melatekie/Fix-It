@@ -5,12 +5,19 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.fixit.databinding.ActivityEditProfileBinding;
 import com.example.fixit.databinding.ActivityLoginBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -29,7 +36,28 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
+
+        ParseUser currentUser = Parcels.unwrap(getIntent().getParcelableExtra("currentUser"));
+        if(user.getKeyIsProfessional()){
+            ParseQuery<Professional> query = ParseQuery.getQuery(Professional.class);
+
+            query.whereEqualTo(Professional.KEY_USER, currentUser);
+            query.include(Professional.KEY_USER);
+            query.findInBackground(new FindCallback<Professional>() {
+                @Override
+                public void done(List<Professional> professionals, ParseException e) {
+                    if (e!=null){
+
+                        return;
+                    }
+                    activityEditProfileBinding.setProfessional(professionals.get(0));
+                }
+            });
+        }
         activityEditProfileBinding.setUser(user);
+
+
+
         activityEditProfileBinding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
