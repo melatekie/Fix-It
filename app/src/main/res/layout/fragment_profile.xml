@@ -91,10 +91,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
-            android:text="@{user.getKeyIsProfessional() ?professional.getTitle():' '}"
+            android:text='@{user.getKeyIsProfessional() ? professional.getTitle().toString():String.valueOf(" ")}'
             android:textSize="18sp"
             android:textStyle="bold" />
-
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -105,13 +104,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
-            android:rating="@{professional.getRatings()==null? 5:professional.getRatings().intValue() }"
+            android:rating='@{user.getKeyIsProfessional() ? professional.getRatings().intValue():5 }'
             android:numStars="5"
             android:scaleX="1.5"
             android:scaleY="1.5"
 
             />
-
 
 
         <TextView
@@ -135,8 +133,9 @@
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/Company"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
-            android:text="@{user.getKeyIsProfessional() ? professional.getCompany() : ' ' }"
+            android:text='@{user.getKeyIsProfessional() ? user.getKeyIsProfessional().toString() :String.valueOf(" ")}'
             />
+
 
         <TextView
             android:id="@+id/Phone"
@@ -157,11 +156,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+            android:text='@{ user.getKeyIsProfessional() ? String.valueOf(professional.getPhone()): String.valueOf(" ")}'
 
-            android:text="@{ String.valueOf(professional.getPhone())}"
 
             android:layout_toEndOf="@+id/Phone"
             />
+
 
         <TextView
             android:id="@+id/Email"
@@ -206,8 +206,11 @@
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/Address"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
-            android:text="@{professional.getStreet().toString() +' '+' '+ professional.getUnit().toString()+' '+professional.getCity().toString()+','+' ' +professional.getState().toString()+' ' +String.valueOf(professional.getZipcode())}"
-            />
+            android:text='@{user.getKeyIsProfessional() ? String.valueOf(professional.getStreet()) +" "+ String.valueOf(professional.getUnit())+" "+String.valueOf(professional.getCity())+", "+String.valueOf(professional.getState())+" " +String.valueOf(professional.getZipcode()):String.valueOf(" ")}'
+
+        />
+
+
 
     </RelativeLayout>
 </layout>

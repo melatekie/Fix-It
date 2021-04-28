@@ -103,7 +103,22 @@
                         android:layout_height="wrap_content"
                         android:text="@{user.getLastName()}" />
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/titleLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="TITLE"
+                    android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+                    app:startIconDrawable="@android:drawable/btn_star">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTitle"
+                        android:text="@{user.getKeyIsProfessional() ? professional.getTitle().toString():String.valueOf(' ')}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/companyLayout"
@@ -117,7 +132,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCompany"
-                android:text="@{professional.getCompany().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getCompany().toString():String.valueOf(' ')}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -138,7 +153,7 @@
                         android:id="@+id/etStreet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{professional.getStreet().toString()}" />
+                        android:text="@{user.getKeyIsProfessional() ? professional.getStreet().toString():String.valueOf(' ')}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -155,7 +170,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUnit"
                 android:layout_width="match_parent"
-                android:text="@{professional.getUnit().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getUnit().toString():String.valueOf(' ')}"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -172,7 +187,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etCity"
                 android:layout_width="match_parent"
-                android:text="@{professional.getCity().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getCity().toString(): String.valueOf(' ')}"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -189,7 +204,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etState"
                 android:layout_width="match_parent"
-                android:text="@{professional.getState().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getState().toString(): String.valueOf(' ')}"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +223,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etZipcode"
                 android:layout_width="match_parent"
-                android:text="@{professional.getZipcode().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getZipcode().toString(): String.valueOf(' ')}"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -224,7 +239,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPhone"
                 android:layout_width="match_parent"
-                android:text="@{professional.getPhone().toString()}"
+                android:text="@{user.getKeyIsProfessional() ? professional.getPhone().toString(): String.valueOf(' ')}"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -233,14 +248,13 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
             android:layout_marginTop="10dp"
             android:hint="EMAIL"
             app:startIconDrawable="@android:drawable/sym_action_email">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
-                android:text="@{user.getEmail()}"
+                android:text="@{user.getEmail().toString()}"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout

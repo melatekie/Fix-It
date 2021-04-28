@@ -107,7 +107,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), EditProfileActivity.class);
                 i.putExtra("user", Parcels.wrap(user));
-                i.putExtra("currentUser",Parcels.wrap(currentUser));
 
                 startActivity(i);
             }
