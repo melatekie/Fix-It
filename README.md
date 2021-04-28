@@ -234,5 +234,17 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 <img src="https://user-images.githubusercontent.com/77254935/115634617-f8c10600-a2d7-11eb-826b-1ea302026e52.gif" width=250>
 
 ### Sprint 2
+#### Items Completed
+* User profile
+* Sign up with user and professional
+* Added Log out
+
+#### Walkthrough 
+
+<img src="https://user-images.githubusercontent.com/37808313/115913706-f0cfa600-a43e-11eb-9119-9fdbd056fb36.gif" width=250>
+<img src="https://user-images.githubusercontent.com/77254935/115914259-b6b2d400-a43f-11eb-8c31-e09a5baf2af3.gif" width=250>
+<img src="https://user-images.githubusercontent.com/43690277/116009257-7cd00200-a5e6-11eb-8a31-3de66f2412d3.gif" width=250>
+<img src="https://user-images.githubusercontent.com/43690277/116009589-83f80f80-a5e8-11eb-8b74-7e5ad5d38235.gif" width=250>
+
 ### Sprint 3
 ### Sprint 4
