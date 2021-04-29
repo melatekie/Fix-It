@@ -18,6 +18,7 @@ import com.example.fixit.EditProfileActivity;
 import com.example.fixit.LoginActivity;
 import com.example.fixit.MainActivity;
 import com.example.fixit.Post;
+import com.example.fixit.Professional;
 import com.example.fixit.R;
 import com.example.fixit.SignUpActivity;
 import com.example.fixit.User;
@@ -26,6 +27,8 @@ import com.example.fixit.databinding.FragmentProfileBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -72,13 +75,39 @@ public class ProfileFragment extends Fragment {
         if(user.getParseFile("profileImage")!=null){
             user.setImage(user.getParseFile("profileImage"));
         }
+        Professional professional  = new Professional();
+        user.setObjectID(currentUser.getObjectId());
+        fragmentProfileBinding.setProfessional(professional);
+
+        if(user.getKeyIsProfessional()){
+            ParseQuery<Professional> query = ParseQuery.getQuery(Professional.class);
+
+            query.whereEqualTo(Professional.KEY_USER, currentUser);
+            query.include(Professional.KEY_USER);
+            query.findInBackground(new FindCallback<Professional>() {
+                @Override
+                public void done(List<Professional> professionals, ParseException e) {
+                    if (e!=null){
+
+                        return;
+                    }
+
+                    fragmentProfileBinding.setProfessional(professionals.get(0));
+
+
+                }
+            });
+        }
+
 
         fragmentProfileBinding.setUser(user);
+
         fragmentProfileBinding.ivEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), EditProfileActivity.class);
                 i.putExtra("user", Parcels.wrap(user));
+
                 startActivity(i);
             }
         });
