@@ -64,6 +64,7 @@ public class ProfileFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         User user = new User();
 
+        //Potential issues with null field such as email or others causing crashing upon clicking 'profile', added fix to setter
         user.setEmail(currentUser.getEmail());
         user.setUsername(currentUser.getUsername());
         user.setFirstName(currentUser.getString("firstName"));

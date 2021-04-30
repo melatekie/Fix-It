@@ -42,7 +42,8 @@ public class User extends ParseObject {
         return getString(KEY_FIRST_NAME);
     }
     public void setFirstName(String firstName){
-        put(KEY_FIRST_NAME, firstName);
+            put(KEY_FIRST_NAME, firstName);
+
     }
 
     //Last Name
@@ -50,7 +51,7 @@ public class User extends ParseObject {
         return getString(KEY_LAST_NAME);
     }
     public void setLastName(String lastName){
-        put(KEY_LAST_NAME, lastName);
+            put(KEY_LAST_NAME, lastName);
     }
 
     //Email
@@ -58,7 +59,13 @@ public class User extends ParseObject {
         return getString(KEY_EMAIL);
     }
     public void setEmail(String email){
-        put(KEY_EMAIL, email);
+
+        if (getEmail() == null) {
+            put(KEY_EMAIL, "None");
+        }
+        else{
+            put(KEY_EMAIL, email);
+        }
     }
 
     //Profile Image
