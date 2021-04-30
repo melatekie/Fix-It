@@ -29,13 +29,16 @@ public class User extends ParseObject {
     public static final String KEY_EMAIL = "email";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PROFILE_IMAGE = "profileImage";
-    public static final String KEY_WHO = "who";
     public static final String KEY_IS_PROFESSIONAL = "isProfessional";
-
+    public static final String KEY_OBJECT_ID = "objectID";
 
 
 
     //--------------------Getters and Setters----------------------
+    // Object ID (user id)
+    public String getKeyObjectID() { return getString(KEY_OBJECT_ID); }
+    public void setObjectID(String id) {put(KEY_OBJECT_ID, id); }
+
 
     //First Name
     public String getFirstName(){
@@ -76,13 +79,6 @@ public class User extends ParseObject {
         put(KEY_PROFILE_IMAGE, parseFile);
     }
 
-    //Who
-    public ParseUser getWho(){
-        return getParseUser(KEY_WHO);
-    }
-    public void setWho(ParseUser who){
-        put(KEY_WHO, who);
-    }
 
     //IsProfessional
     public Boolean getKeyIsProfessional() { return getBoolean(KEY_IS_PROFESSIONAL); }
