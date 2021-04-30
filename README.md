@@ -3,6 +3,10 @@ App Design Project
 
 # FIX IT!
 
+CURRENT WIP GIF
+
+<img src="Fixit3.gif" width=300>
+
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
