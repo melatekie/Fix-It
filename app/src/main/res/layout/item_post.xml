@@ -11,10 +11,12 @@
             name="post"
             type="com.example.fixit.Post" />
     </data>
+
     <RelativeLayout
         android:id="@+id/rlUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
         android:background="@drawable/backdrop"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".PostsAdapter">
@@ -25,8 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ivProfileImage"
             android:layout_centerHorizontal="true"
-            android:text="@{post.getQuestion()}"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:text="@{post.getQuestion()}" />
 
         <ImageView
             android:id="@+id/ivProfileImage"
@@ -54,6 +56,7 @@
             android:layout_below="@+id/tvQuestion"
             android:layout_alignParentEnd="false"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
             tools:srcCompat="@tools:sample/avatars" />
     </RelativeLayout>
 
