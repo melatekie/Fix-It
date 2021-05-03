@@ -4,11 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="post"
+            type="com.example.fixit.Post" />
+    </data>
 
     <RelativeLayout
         android:id="@+id/rlUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
         android:background="@drawable/backdrop"
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".PostsAdapter">
@@ -25,10 +33,11 @@
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="170dp" />
 
+
         <ImageView
             android:id="@+id/ivProfileImage"
-            android:layout_width="59dp"
-            android:layout_height="59dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="22dp"
             android:layout_marginTop="20dp"
@@ -36,12 +45,13 @@
 
         <TextView
             android:id="@+id/tvUsername"
-            android:layout_width="74dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="7dp"
             android:layout_marginTop="23dp"
             android:layout_toEndOf="@+id/ivProfileImage"
+
             android:text="Username" />
 
         <ImageView

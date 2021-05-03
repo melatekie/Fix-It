@@ -55,20 +55,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fnLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="384dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragmentLayout"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="16dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:hint="What is the problem?">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etProblem"
                 android:layout_width="match_parent"
-                android:layout_height="147dp" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
