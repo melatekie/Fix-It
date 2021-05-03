@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +85,33 @@ public class ComposeFragment extends DialogFragment {
             }
         });
 
+        /*
+            Function to check whether the field is empty or not. I chose to put this in the class
+            rather than the XML because it is easier to test and add in functionality.
+         */
+
+        fragmentComposeBinding.btnCompose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //String composeText = fragmentComposeBinding.etProblem.getText().toString();
+                //fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty());
+                fragmentComposeBinding.btnCompose.setEnabled(false);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String composeText = fragmentComposeBinding.etProblem.getText().toString();
+                fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty() && composeText.length() <= 200);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         //Save and upload the question/picture
         fragmentComposeBinding.btnCompose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +119,13 @@ public class ComposeFragment extends DialogFragment {
                 String description =  fragmentComposeBinding.etProblem.getText().toString();
                 if (description.isEmpty()){
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Since posts must have photos, this is a checker to prevent crashes
+                photoFile = getContext().getFileStreamPath(photoFileName);
+                if (!photoFile.exists()){
+                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 /*
@@ -125,7 +161,6 @@ public class ComposeFragment extends DialogFragment {
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            // Start the image capture intent to take photo
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
@@ -177,7 +212,6 @@ public class ComposeFragment extends DialogFragment {
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setQuestion(description);
-        post.setImage(new ParseFile(photoFile));
         post.setAuthor(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override
