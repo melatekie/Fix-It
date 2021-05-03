@@ -7,6 +7,9 @@
         <variable
             name="user"
             type="com.example.fixit.User" />
+        <variable
+            name="post"
+            type="com.example.fixit.Post" />
 
     </data>
 
@@ -44,7 +47,7 @@
                     android:layout_marginRight="20dp"
                     android:foregroundGravity="right"
                     app:srcCompat="@android:drawable/ic_menu_camera"
-                    app:tint="@color/orange" />
+                    app:tint="@color/orange"/>
 
             </com.google.android.material.appbar.MaterialToolbar>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

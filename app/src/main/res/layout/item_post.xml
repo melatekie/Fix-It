@@ -23,12 +23,16 @@
 
         <TextView
             android:id="@+id/tvQuestion"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ivProfileImage"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:text="@{post.getQuestion()}" />
+            android:layout_width="313dp"
+            android:layout_height="86dp"
+            android:layout_below="@+id/tvTime"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="170dp" />
+
 
         <ImageView
             android:id="@+id/ivProfileImage"
@@ -47,17 +51,53 @@
             android:layout_marginStart="7dp"
             android:layout_marginTop="23dp"
             android:layout_toEndOf="@+id/ivProfileImage"
-            android:text="@{post.getAuthor().getUsername()}" />
+
+            android:text="Username" />
 
         <ImageView
             android:id="@+id/ivPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_width="303dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvQuestion"
-            android:layout_alignParentEnd="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="-170dp"
+            android:layout_marginEnd="55dp"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUsername"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ivProfileImage"
+            android:text="post time" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPicture"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="307dp"
+            app:srcCompat="@drawable/message_check" />
+
+        <TextView
+            android:id="@+id/tvCommentsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPicture"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="259dp"
+            tools:text="cCount" />
+
     </RelativeLayout>
 
 </layout>
