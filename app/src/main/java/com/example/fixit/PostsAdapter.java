@@ -49,6 +49,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             //  Log.i("PostsAdapter",image.getUrl());
             Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
         }
+
+        holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
+
     }
 
     @Override

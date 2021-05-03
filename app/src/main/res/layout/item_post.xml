@@ -52,7 +52,7 @@
             android:layout_marginTop="23dp"
             android:layout_toEndOf="@+id/ivProfileImage"
 
-            android:text="Username" />
+            android:text="@{post.getAuthor().getUsername()}" />
 
         <ImageView
             android:id="@+id/ivPicture"
