@@ -8,21 +8,17 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.fixit.databinding.ActivityMainBinding;
+import com.example.fixit.fragments.ComposeFragment;
 import com.example.fixit.fragments.LogoutFragment;
 import com.example.fixit.fragments.PostsFragment;
 import com.example.fixit.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
     private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton fabCompose;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        //fabCompose = activityMainBinding.fabCompose;
+
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         bottomNavigationView = activityMainBinding.bvBottomNavigation;
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,6 +66,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
+
+
+        activityMainBinding.fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ComposeFragment composefragment = new ComposeFragment();
+                composefragment.show(getSupportFragmentManager(),"Testing Dialog Fragment!");
+
+                //Intent i = new Intent(v.getContext(), ComposeActivity.class);
+                //startActivity(i);
+            }
+        });
 
         //queryPost();              //FOR TESTING PURPOSES
 

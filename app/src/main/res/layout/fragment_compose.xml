@@ -7,9 +7,6 @@
         <variable
             name="user"
             type="com.example.fixit.User" />
-        <variable
-            name="post"
-            type="com.example.fixit.Post" />
 
     </data>
 
@@ -47,51 +44,58 @@
                     android:layout_marginRight="20dp"
                     android:foregroundGravity="right"
                     app:srcCompat="@android:drawable/ic_menu_camera"
-                    app:tint="@color/orange"/>
+                    app:tint="@color/orange" />
 
             </com.google.android.material.appbar.MaterialToolbar>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_below="@+id/fragmentLayout"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fnLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragmentLayout"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+
             android:hint="What is the problem?">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etProblem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnCompose"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="550dp"
-            android:layout_marginEnd="50dp"
-
-            android:text="Post my Problem!" />
 
         <ImageView
             android:id="@+id/ivPicture"
-            android:layout_width="153dp"
-            android:layout_height="156dp"
-            android:layout_below="@+id/fnLayout"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="126dp"
-            android:layout_marginTop="38dp"
-            android:layout_marginBottom="195dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
 
+            tools:srcCompat="@tools:sample/avatars" />
+        <Button
+            android:id="@+id/btnCompose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="Post my Problem!" />
+            </LinearLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 </layout>

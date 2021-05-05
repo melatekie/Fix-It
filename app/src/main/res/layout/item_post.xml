@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="post"
+            type="com.example.fixit.Post" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/backdrop"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".PostsAdapter">
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="313dp"
+            android:layout_height="86dp"
+            android:layout_below="@+id/tvTime"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="170dp" />
+
+
+        <ImageView
+            android:id="@+id/ivProfileImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="20dp"
+            android:foreground="@drawable/ic_baseline_person_24" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="23dp"
+            android:layout_toEndOf="@+id/ivProfileImage"
+
+            android:text="@{post.getAuthor().getUsername()}" />
+
+        <ImageView
+            android:id="@+id/ivPicture"
+            android:layout_width="303dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvQuestion"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="-170dp"
+            android:layout_marginEnd="55dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUsername"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/ivProfileImage"
+            android:text="post time" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPicture"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="307dp"
+            app:srcCompat="@drawable/message_check" />
+
+        <TextView
+            android:id="@+id/tvCommentsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPicture"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="259dp"
+            tools:text="cCount" />
+
+    </RelativeLayout>
+
+</layout>

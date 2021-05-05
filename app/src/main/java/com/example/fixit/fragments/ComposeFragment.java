@@ -1,22 +1,32 @@
-package com.example.fixit;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.databinding.DataBindingUtil;
+package com.example.fixit.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.fixit.databinding.ActivityComposeBinding;
+import com.example.fixit.ComposeActivity;
+import com.example.fixit.MainActivity;
+import com.example.fixit.Post;
+import com.example.fixit.R;
+import com.example.fixit.databinding.FragmentComposeBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -24,30 +34,41 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 
-/*
-    Holding onto this activity in case we decide to go back to regular activities instead of dialog Fragment.
-    Everything here works.
- */
+import static android.app.Activity.RESULT_OK;
 
+public class ComposeFragment extends DialogFragment {
 
-public class ComposeActivity extends AppCompatActivity {
-
-    public static final String TAG = "ComposeActivity";
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public static final String TAG = "ComposeFragment";
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 142;
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
-    private ActivityComposeBinding activityComposeBinding;
+    private FragmentComposeBinding fragmentComposeBinding;
+
+    public ComposeFragment() {
+        // Required empty public constructor
+    }
+
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
-        activityComposeBinding = DataBindingUtil.setContentView(this,R.layout.activity_compose);
+    }
 
-        //Back button
-        activityComposeBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_compose, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        fragmentComposeBinding = FragmentComposeBinding.bind(view);
+
+        fragmentComposeBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(view.getContext(), MainActivity.class);
@@ -56,23 +77,58 @@ public class ComposeActivity extends AppCompatActivity {
         });
 
         //Launch the camera on click
-        activityComposeBinding.ivCamera.setOnClickListener(new View.OnClickListener() {
+        fragmentComposeBinding.ivCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ComposeActivity.this,"Launching Camera!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Launching Camera!", Toast.LENGTH_SHORT).show();
                 launchCamera();
             }
         });
 
+        /*
+            Function to check whether the field is empty or not. I chose to put this in the class
+            rather than the XML because it is easier to test and add in functionality.
+         */
+
+        fragmentComposeBinding.btnCompose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //String composeText = fragmentComposeBinding.etProblem.getText().toString();
+                //fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty());
+                fragmentComposeBinding.btnCompose.setEnabled(false);
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String composeText = fragmentComposeBinding.etProblem.getText().toString();
+                fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty() && composeText.length() <= 200);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         //Save and upload the question/picture
-        activityComposeBinding.btnCompose.setOnClickListener(new View.OnClickListener() {
+        fragmentComposeBinding.btnCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String description =  activityComposeBinding.etProblem.getText().toString();
+                String description =  fragmentComposeBinding.etProblem.getText().toString();
                 if (description.isEmpty()){
-                    Toast.makeText(ComposeActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                //Since posts must have photos, this is a checker to prevent crashes
+                /*
+                photoFile = getContext().getFileStreamPath(photoFileName);
+                if (!photoFile.exists()){
+                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
+                    return;
+                } */
                 /*
                 if (photoFile == null || activityComposeBinding.ivPicture.getDrawable() == null){
                     Toast.makeText(ComposeActivity.this, "No Image", Toast.LENGTH_SHORT).show();
@@ -82,8 +138,9 @@ public class ComposeActivity extends AppCompatActivity {
                 savePost(description, currentUser, photoFile);
             }
         });
-
     }
+
+
 
     /*
         Launch camera function supplied by Codepath.
@@ -99,13 +156,12 @@ public class ComposeActivity extends AppCompatActivity {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
-        if (intent.resolveActivity(this.getPackageManager()) != null) {
-            // Start the image capture intent to take photo
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }
@@ -123,9 +179,9 @@ public class ComposeActivity extends AppCompatActivity {
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
 
-                activityComposeBinding.ivPicture.setImageBitmap(takenImage);
+                fragmentComposeBinding.ivPicture.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -137,7 +193,7 @@ public class ComposeActivity extends AppCompatActivity {
         // Get safe storage directory for photos
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
@@ -157,18 +213,17 @@ public class ComposeActivity extends AppCompatActivity {
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setQuestion(description);
-        post.setImage(new ParseFile(photoFile));
         post.setAuthor(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null){
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(ComposeActivity.this, "Error while saving in savePost", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error while saving in savePost", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful");
-                activityComposeBinding.etProblem.setText("");
-                activityComposeBinding.ivPicture.setImageResource(0);
+                fragmentComposeBinding.etProblem.setText("");
+                fragmentComposeBinding.ivPicture.setImageResource(0);
                 //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
             }
         });
