@@ -63,12 +63,12 @@ public class User extends ParseObject {
     }
     public void setEmail(String email){
 
-        if (getEmail() == null) {
-            put(KEY_EMAIL, "None");
-        }
-        else{
+        //if (getEmail() == null) {
+        //    put(KEY_EMAIL, "None");
+        //}
+        //else{
             put(KEY_EMAIL, email);
-        }
+        //}
     }
 
     //Profile Image

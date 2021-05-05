@@ -26,7 +26,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context context;
     private List<Post> posts;
 
-
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
         this.posts = posts;
@@ -47,8 +46,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         ParseFile image = post.getImage();
         if(image!=null){
             //  Log.i("PostsAdapter",image.getUrl());
-            //Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
-            Glide.with(context).load(post.getImage().getUrl()).into(holder.itemPostBinding.ivPicture);
+            Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
+            //Glide.with(context).load(post.getImage().getUrl()).into(holder.itemPostBinding.ivPicture);
         }
 
         holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
@@ -62,7 +61,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     //Something weird is going on with databinding, it is not working so I will be using boilerplate for this one
     class ViewHolder extends RecyclerView.ViewHolder{
-//        private TextView tvQuestion;
+        //        private TextView tvQuestion;
 //        private TextView tvUsername;
 //        private ImageView ivProfile;
 //        private ImageView ivPicture;
