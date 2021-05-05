@@ -123,17 +123,18 @@ public class ComposeFragment extends DialogFragment {
                 }
 
                 //Since posts must have photos, this is a checker to prevent crashes
-                /*
-                photoFile = getContext().getFileStreamPath(photoFileName);
-                if (!photoFile.exists()){
-                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
-                    return;
-                } */
-                /*
-                if (photoFile == null || activityComposeBinding.ivPicture.getDrawable() == null){
-                    Toast.makeText(ComposeActivity.this, "No Image", Toast.LENGTH_SHORT).show();
-                    return;
-                } */
+
+//                photoFile = getContext().getFileStreamPath(photoFileName);
+//                if (!photoFile.exists()){
+//                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+
+//                if (photoFile == null || fragmentComposeBinding.ivPicture.getDrawable() == null){
+//                    Toast.makeText(getContext(), "No Image", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
             }
@@ -213,6 +214,7 @@ public class ComposeFragment extends DialogFragment {
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setQuestion(description);
+        post.setImage(new ParseFile(photoFile));
         post.setAuthor(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override

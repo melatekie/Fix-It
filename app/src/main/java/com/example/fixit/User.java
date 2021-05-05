@@ -99,6 +99,7 @@ public class User extends ParseObject {
             });
         } else {
             if(user.getKeyIsProfessional()){
+
                 img.setImageResource(R.drawable.professional_img);
             }
             else {
