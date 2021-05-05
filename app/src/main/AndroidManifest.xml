@@ -39,7 +39,6 @@
 
         </provider>
         <activity android:name=".EditProfileActivity"></activity>
-        <activity android:name=".ComposeActivity" />
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".LoginActivity">
