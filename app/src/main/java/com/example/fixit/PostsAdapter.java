@@ -26,7 +26,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context context;
     private List<Post> posts;
 
-
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
         this.posts = posts;
@@ -71,7 +70,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     //Something weird is going on with databinding, it is not working so I will be using boilerplate for this one
     class ViewHolder extends RecyclerView.ViewHolder{
-//        private TextView tvQuestion;
+        //        private TextView tvQuestion;
 //        private TextView tvUsername;
 //        private ImageView ivProfile;
 //        private ImageView ivPicture;

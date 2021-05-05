@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -22,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.fixit.ComposeActivity;
 import com.example.fixit.MainActivity;
 import com.example.fixit.Post;
 import com.example.fixit.R;
@@ -124,16 +122,18 @@ public class ComposeFragment extends DialogFragment {
 
                 //Since posts must have photos, this is a checker to prevent crashes
 
-//                photoFile = getContext().getFileStreamPath(photoFileName);
-//                if (!photoFile.exists()){
-//                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
 
-//                if (photoFile == null || fragmentComposeBinding.ivPicture.getDrawable() == null){
-//                    Toast.makeText(getContext(), "No Image", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
+                /*
+                photoFile = getContext().getFileStreamPath(photoFileName);
+                if (!photoFile.exists()){
+                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
+                    return;
+                } */
+
+                /*if (photoFile == null || fragmentComposeBinding.ivPicture.getDrawable() == null){
+                    Toast.makeText(getContext(), "No Image", Toast.LENGTH_SHORT).show();
+                    return;
+                } */
 
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
@@ -216,6 +216,7 @@ public class ComposeFragment extends DialogFragment {
         post.setQuestion(description);
         post.setImage(new ParseFile(photoFile));
         post.setAuthor(currentUser);
+        post.setImage(new ParseFile(photoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
