@@ -44,11 +44,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.itemPostBinding.setPost(post);
+        User user = new User();
+        user.setUsername(post.getAuthor().getUsername());
+        user.setFirstName(post.getAuthor().getString("firstName"));
+        user.setLastName(post.getAuthor().getString("lastName"));
+        user.setIsProfessional(post.getAuthor().getBoolean("isProfessional"));
+        if(post.getAuthor().getParseFile("profileImage")!=null){
+            user.setImage(user.getParseFile("profileImage"));
+        }
+        holder.itemPostBinding.setUser(user);
         ParseFile image = post.getImage();
         if(image!=null){
             //  Log.i("PostsAdapter",image.getUrl());
-            //Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
-            Glide.with(context).load(post.getImage().getUrl()).into(holder.itemPostBinding.ivPicture);
+            Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
+            //Glide.with(context).load(post.getImage().getUrl()).into(holder.itemPostBinding.ivPicture);
         }
 
         holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
