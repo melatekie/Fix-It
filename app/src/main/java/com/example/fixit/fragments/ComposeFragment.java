@@ -121,6 +121,8 @@ public class ComposeFragment extends DialogFragment {
                 }
 
                 //Since posts must have photos, this is a checker to prevent crashes
+
+
                 /*
                 photoFile = getContext().getFileStreamPath(photoFileName);
                 if (!photoFile.exists()){
@@ -132,6 +134,7 @@ public class ComposeFragment extends DialogFragment {
                     Toast.makeText(getContext(), "No Image", Toast.LENGTH_SHORT).show();
                     return;
                 } */
+
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile);
             }
@@ -212,7 +215,7 @@ public class ComposeFragment extends DialogFragment {
         Post post = new Post();
         post.setQuestion(description);
         post.setAuthor(currentUser);
-        post.setImage(new ParseFile(photoFile));
+        if(photoFile!=null) post.setImage(new ParseFile(photoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
