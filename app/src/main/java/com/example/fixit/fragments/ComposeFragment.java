@@ -214,9 +214,8 @@ public class ComposeFragment extends DialogFragment {
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setQuestion(description);
-        post.setImage(new ParseFile(photoFile));
         post.setAuthor(currentUser);
-        post.setImage(new ParseFile(photoFile));
+        if(photoFile!=null) post.setImage(new ParseFile(photoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

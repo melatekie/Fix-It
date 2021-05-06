@@ -58,7 +58,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:loadImage="@{user}"
-            android:foreground="@drawable/rounded_fig"/>
+            />
 
         <ScrollView
             android:layout_below="@+id/ivProfileImage"

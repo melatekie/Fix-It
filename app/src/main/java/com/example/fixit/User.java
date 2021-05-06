@@ -7,6 +7,8 @@ import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.GetDataCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -95,19 +97,34 @@ public class User extends ParseObject {
                 public void done(byte[] data, ParseException e) {
                     if (e == null) {
                         Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                        img.setImageBitmap(bmp);
+                        Glide.with(img)
+                                .load(bmp)
+                                .transform(new CircleCrop())
+                                .into(img);
+
                     }
                 }
             });
         } else {
             if(user.getKeyIsProfessional()){
+                Glide.with(img)
+                        .load(R.drawable.professional_img)
+                        .transform(new CircleCrop())
+                        .into(img);
 
-                img.setImageResource(R.drawable.professional_img);
             }
             else {
-                img.setImageResource(R.drawable.default_img);
+                Glide.with(img)
+                        .load(R.drawable.default_img)
+                        .transform(new CircleCrop())
+                        .into(img);
+
             }
         }
+//        Glide.with(context).load(Url)
+//                .transform(new CircleCrop())
+//                .into(image);
+
     }// load image
 
 }
