@@ -70,6 +70,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 context.startActivity(i);
             }
         });
+
+        //Clicking on Question will pop out detail view
+        holder.itemPostBinding.tvQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetailPost.class);
+                i.putExtra("user",Parcels.wrap(user));
+                i.putExtra("post", Parcels.wrap(post));
+                context.startActivity(i);
+            }
+        });
+
         ParseFile image = post.getImage();
         if(image!=null){
             //  Log.i("PostsAdapter",image.getUrl());
@@ -88,19 +100,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     //Something weird is going on with databinding, it is not working so I will be using boilerplate for this one
     class ViewHolder extends RecyclerView.ViewHolder{
-        //        private TextView tvQuestion;
-//        private TextView tvUsername;
-//        private ImageView ivProfile;
-//        private ImageView ivPicture;
         ItemPostBinding itemPostBinding;
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//
-//            tvQuestion = itemView.findViewById(R.id.tvQuestion);
-//            tvUsername = itemView.findViewById(R.id.tvUsername);
-//            ivProfile = itemView.findViewById(R.id.ivProfileImage);
-//            ivPicture = itemView.findViewById(R.id.ivPicture);
-//        }
+
 
         public ViewHolder(ItemPostBinding itemPostBinding) {
             super(itemPostBinding.getRoot());
@@ -117,19 +118,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             notifyDataSetChanged();
         }
 
-//        public void itemPostBinding(Post post) {
-//
-//            ParseFile image = post.getImage();
-//
-////            tvQuestion.setText(post.getQuestion());
-////            tvUsername.setText(post.getAuthor().getUsername());
-//            itemPostBinding.tvQuestion.setText(post.getQuestion());
-//            itemPostBinding.tvUsername.setText(post.getAuthor().getUsername());
-//
-//            if (image != null)
-//                Glide.with(context).load(post.getImage().getUrl()).into(itemPostBinding.ivPicture);
-//
-//        }
     }
 
 
