@@ -16,7 +16,7 @@
     </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:context=".DetailPost">
 
@@ -111,16 +111,25 @@
                 app:layout_anchorGravity="start|bottom"
                 app:srcCompat="@drawable/message_check" />
 
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textStyle="bold"
+                app:layout_anchor="@+id/appBarLayout2"
+                app:layout_anchorGravity="end|top" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <ImageView
             android:id="@+id/ivComments"
             android:layout_width="wrap_content"
-            android:layout_height="294dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/fragmentLayout"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="86dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="5dp"
             app:srcCompat="@drawable/commentbubble" />
@@ -146,7 +155,7 @@
             android:layout_alignParentStart="true"
 
             android:layout_marginStart="75dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="33dp"
             android:layout_marginEnd="187dp"
             android:text="Comment Name"
             android:textStyle="bold" />
@@ -159,11 +168,23 @@
             android:layout_alignEnd="@+id/ivComments"
             android:layout_alignParentStart="true"
 
-            android:layout_marginStart="78dp"
-            android:layout_marginTop="51dp"
-            android:layout_marginEnd="19dp"
+            android:layout_marginStart="77dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginEnd="20dp"
             android:text="Comments"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvComments"
+            android:layout_alignStart="@+id/ivComments"
+            android:layout_alignEnd="@+id/ivComments"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="298dp"
+            app:srcCompat="@drawable/heart" />
 
 
     </RelativeLayout>

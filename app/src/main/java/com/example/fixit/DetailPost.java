@@ -41,6 +41,10 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.setPost(post);
         postDetailBinding.tvQuestion.setText(post.getQuestion());
 
+        String temp = post.getCategory();
+        if ( temp != null )
+            postDetailBinding.tvCategory.setText(post.getCategory());
+
         //Image with conditional to prevent crash  if  null
 
         postDetailBinding.tvName.setText(user.getFirstName() + " " + user.getLastName());
@@ -49,4 +53,6 @@ public class DetailPost extends AppCompatActivity {
             Glide.with(this).load(image.getUrl()).into(postDetailBinding.ivProblem);
         }
     }
+
+
 }
