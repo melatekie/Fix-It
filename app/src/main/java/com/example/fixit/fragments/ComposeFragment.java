@@ -3,6 +3,8 @@ package com.example.fixit.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,6 +21,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.example.fixit.MainActivity;
@@ -31,6 +36,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,13 +47,22 @@ public class ComposeFragment extends DialogFragment {
 
     private File photoFile;
     public String photoFileName = "photo.jpg";
+    private String category;
     private FragmentComposeBinding fragmentComposeBinding;
 
     public ComposeFragment() {
         // Required empty public constructor
     }
 
-
+    //TODO list of categories in strings.xml
+    //dropdown menu
+    @Override
+    public void onResume() {
+        super.onResume();
+        String[] items = getResources().getStringArray(R.array.category);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_item, items);
+        fragmentComposeBinding.atCategory.setAdapter(adapter);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,13 +81,12 @@ public class ComposeFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         fragmentComposeBinding = FragmentComposeBinding.bind(view);
 
-        fragmentComposeBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
+        // Show soft keyboard automatically and request focus to field
+        fragmentComposeBinding.etProblem.requestFocus();
+        Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        //Make dialog window transparent
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         //Launch the camera on click
         fragmentComposeBinding.ivCamera.setOnClickListener(new View.OnClickListener() {
@@ -120,22 +134,17 @@ public class ComposeFragment extends DialogFragment {
                     return;
                 }
 
-                //Since posts must have photos, this is a checker to prevent crashes
-                /*
-                photoFile = getContext().getFileStreamPath(photoFileName);
-                if (!photoFile.exists()){
-                    Toast.makeText(getContext(), "Must take a photo!", Toast.LENGTH_SHORT).show();
+                category = fragmentComposeBinding.atCategory.getText().toString();
+                if (category.isEmpty()) {
+                    Toast.makeText(getContext(), "Select your category", Toast.LENGTH_SHORT).show();
                     return;
-                } */
+                }
 
-                /*if (photoFile == null || fragmentComposeBinding.ivPicture.getDrawable() == null){
-                    Toast.makeText(getContext(), "No Image", Toast.LENGTH_SHORT).show();
-                    return;
-                } */
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                savePost(description, currentUser, photoFile, category);
             }
         });
+
     }
 
 
@@ -208,11 +217,12 @@ public class ComposeFragment extends DialogFragment {
         Create a post object which will store the necessary information into the variable 'post' and then use .saveInBackground() to actually save it.
         Feel free to add more if we want to scale it with either categories or other stretch stories.
      */
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
+    private void savePost(String description, ParseUser currentUser, File photoFile, String category) {
         Post post = new Post();
         post.setQuestion(description);
         post.setAuthor(currentUser);
-        post.setImage(new ParseFile(photoFile));
+        if (photoFile != null) post.setImage(new ParseFile(photoFile));
+        post.setKeyCategory(category);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -221,10 +231,16 @@ public class ComposeFragment extends DialogFragment {
                     Toast.makeText(getContext(), "Error while saving in savePost", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful");
-                fragmentComposeBinding.etProblem.setText("");
-                fragmentComposeBinding.ivPicture.setImageResource(0);
+                //fragmentComposeBinding.etProblem.setText("");
+                //fragmentComposeBinding.ivPicture.setImageResource(0);
                 //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
+                goMainActivity();
             }
         });
+    }
+
+    private void goMainActivity() {
+        Intent i = new Intent(getContext(), MainActivity.class);
+        startActivity(i);
     }
 }
