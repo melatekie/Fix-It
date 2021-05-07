@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <import type="android.view.View"/>
+    <variable
+        name="user"
+        type="com.example.fixit.User" />
+    <variable
+        name="professional"
+        type="com.example.fixit.Professional" />
+</data>
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfileActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_anchor="@+id/appBarLayout"
+            app:layout_anchorGravity="center"
+            app:navigationIcon="@drawable/ic_back">
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="false"
+                android:layout_gravity="center_horizontal"
+                android:foregroundGravity="center_horizontal"
+                android:text="@{user.getKeyUsername()}"
+                android:textColor="@color/orange"
+                android:textStyle="bold" />
+
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_below="@id/fragmentLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="100dp"
+        android:loadImage="@{user}"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/tvFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivProfileImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@{user.getFirstName()+ ' '+user.getLastName()}"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvFullName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:text='@{user.getKeyIsProfessional() ? professional.getTitle().toString():String.valueOf(" ")}'
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:rating='@{user.getKeyIsProfessional() ? professional.getRatings().intValue():5 }'
+        android:numStars="5"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+
+        />
+
+
+    <TextView
+        android:id="@+id/Company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingBar"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="250dp"
+        android:text="Company: "
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvCompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingBar"
+        android:layout_marginStart="-245dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/Company"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:text='@{user.getKeyIsProfessional() ? professional.getCompany().toString() :String.valueOf(" ")}'
+        />
+
+
+    <TextView
+        android:id="@+id/Phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCompany"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="250dp"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:text="Phone: "
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_below="@+id/tvCompany"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="-245dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:text='@{ user.getKeyIsProfessional() ? String.valueOf(professional.getPhone()): String.valueOf(" ")}'
+
+
+        android:layout_toEndOf="@+id/Phone"
+        />
+
+
+
+
+    <TextView
+        android:id="@+id/Address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Phone"
+        android:layout_alignParentRight="true"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="250dp"
+        android:text="Address: "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Phone"
+        android:layout_marginStart="-245dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@+id/Address"
+        android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
+        android:text='@{user.getKeyIsProfessional() ? String.valueOf(professional.getStreet()) +" "+ String.valueOf(professional.getUnit())+" "+String.valueOf(professional.getCity())+", "+String.valueOf(professional.getState())+" " +String.valueOf(professional.getZipcode()):String.valueOf(" ")}'
+
+        />
+
+
+
+</RelativeLayout>
+</layout>
+

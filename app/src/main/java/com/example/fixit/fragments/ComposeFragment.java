@@ -137,8 +137,6 @@ public class ComposeFragment extends DialogFragment {
                 category = fragmentComposeBinding.atCategory.getText().toString();
                 if (category.isEmpty()) {
                     Toast.makeText(getContext(), "Select your category", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description, currentUser, photoFile, category);
@@ -221,7 +219,7 @@ public class ComposeFragment extends DialogFragment {
         Post post = new Post();
         post.setQuestion(description);
         post.setAuthor(currentUser);
-        if (photoFile != null) post.setImage(new ParseFile(photoFile));
+        if (photoFile!= null) post.setImage(new ParseFile(photoFile));
         post.setKeyCategory(category);
         post.saveInBackground(new SaveCallback() {
             @Override

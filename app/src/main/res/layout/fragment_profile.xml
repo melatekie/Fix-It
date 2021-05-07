@@ -18,7 +18,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SignUpActivity">
+        tools:context=".fragments.ProfileFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/fragmentLayout"
@@ -73,8 +73,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="100dp"
             android:loadImage="@{user}"
-            android:layout_height="100dp"
-            android:foreground="@drawable/rounded_fig"/>
+            android:layout_height="100dp" />
 
         <TextView
             android:id="@+id/tvFullName"
@@ -136,7 +135,7 @@
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/Company"
             android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
-            android:text='@{user.getKeyIsProfessional() ? user.getKeyIsProfessional().toString() :String.valueOf(" ")}'
+            android:text='@{user.getKeyIsProfessional() ? professional.getCompany().toString() :String.valueOf(" ")}'
             />
 
 
