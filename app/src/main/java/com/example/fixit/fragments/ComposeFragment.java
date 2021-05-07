@@ -101,25 +101,20 @@ public class ComposeFragment extends DialogFragment {
             Function to check whether the field is empty or not. I chose to put this in the class
             rather than the XML because it is easier to test and add in functionality.
          */
-
-        fragmentComposeBinding.btnCompose.addTextChangedListener(new TextWatcher() {
+        fragmentComposeBinding.btnCompose.setEnabled(false);
+        fragmentComposeBinding.etProblem.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //String composeText = fragmentComposeBinding.etProblem.getText().toString();
-                //fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty());
-                fragmentComposeBinding.btnCompose.setEnabled(false);
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String composeText = fragmentComposeBinding.etProblem.getText().toString();
-                fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty() && composeText.length() <= 200);
+                String composeText = fragmentComposeBinding.etProblem.getText().toString().trim();
+                fragmentComposeBinding.btnCompose.setEnabled(!composeText.isEmpty());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -137,9 +132,10 @@ public class ComposeFragment extends DialogFragment {
                 category = fragmentComposeBinding.atCategory.getText().toString();
                 if (category.isEmpty()) {
                     Toast.makeText(getContext(), "Select your category", Toast.LENGTH_SHORT).show();
-
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile, category);
+                    return;
+                }
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    savePost(description, currentUser, photoFile, category);
             }
         });
 
@@ -219,14 +215,14 @@ public class ComposeFragment extends DialogFragment {
         Post post = new Post();
         post.setQuestion(description);
         post.setAuthor(currentUser);
-        if (photoFile!= null) post.setImage(new ParseFile(photoFile));
+        if (photoFile != null) post.setImage(new ParseFile(photoFile));
         post.setKeyCategory(category);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e != null){
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "Error while saving in savePost", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful");
                 //fragmentComposeBinding.etProblem.setText("");

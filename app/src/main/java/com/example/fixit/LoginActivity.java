@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -66,7 +68,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //disable button when username & password is empty
+        binding.btnLogIn.setEnabled(false);
+        binding.etUsername.addTextChangedListener(loginTextWatcher);
+        binding.etPassword.addTextChangedListener(loginTextWatcher);
     }
+
+    private final TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String username = binding.etUsername.getText().toString().trim();
+            String password = binding.etPassword.getText().toString().trim();
+            binding.btnLogIn.setEnabled(!username.isEmpty() && !password.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
     //login function
     private void loginUser(String username, String password){

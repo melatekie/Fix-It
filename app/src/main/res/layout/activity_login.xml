@@ -62,6 +62,8 @@
             android:layout_below="@+id/layoutPassword"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/button_background_color"
             android:text="Log In"
             />
 

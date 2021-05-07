@@ -99,6 +99,8 @@
                 android:layout_below="@+id/fnLayout"
                 android:layout_marginBottom="120dp"
                 android:layout_alignParentEnd="true"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/button_background_color"
                 android:text="Post" />
 
 
