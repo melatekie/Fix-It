@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,10 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
+
 
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.itemPostBinding.setPost(post);
+
         User user= new User();
 //        user.setEmail(String.valueOf(post.getAuthor().getString("email")));
         user.setUsername(post.getAuthor().getUsername());
@@ -79,6 +83,43 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
 
+
+        // WILL BE MOVED TO DETAILED ACTVITITY
+        // WILL BE MOVED TO DETAILED ACTVITITY
+        // WILL BE MOVED TO DETAILED ACTVITITY
+        holder.itemPostBinding.btnCommentPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Comment comment = new Comment();
+                String user_input_comment = holder.itemPostBinding.etComment.getText().toString();
+                if (user_input_comment.isEmpty()){
+                    Log.i(TAG, "Empty comment");
+                    Toast.makeText(context, "comment cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                comment.setUserId(post.getAuthor());
+                comment.setComment(user_input_comment);
+                comment.setPostId(post);
+
+                comment.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error while saving", e);
+                            Log.i(TAG,  e.getMessage());
+                        }
+                        Log.i(TAG, "Comment save was successful");
+                        holder.itemPostBinding.etComment.setText("");
+                        //fragmentComposeBinding.ivPicture.setImageResource(0);
+                        //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
+
+                    }
+                });
+            }
+        });
+        // WILL BE MOVED TO DETAILED ACTVITITY
+        // WILL BE MOVED TO DETAILED ACTVITITY
+        // WILL BE MOVED TO DETAILED ACTVITITY
     }
 
     @Override
