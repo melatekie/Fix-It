@@ -2,6 +2,7 @@ package com.example.fixit;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -58,7 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         user.setLastName(post.getAuthor().getString("lastName"));
         user.setIsProfessional(post.getAuthor().getBoolean("isProfessional"));
         if(post.getAuthor().getParseFile("profileImage")!=null){
-            user.setImage(user.getParseFile("profileImage"));
+            user.setImage(post.getAuthor().getParseFile("profileImage"));
         }
         holder.itemPostBinding.setUser(user);
         holder.itemPostBinding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -70,15 +72,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 context.startActivity(i);
             }
         });
-        ParseFile image = post.getImage();
-        if(image!=null){
-            //  Log.i("PostsAdapter",image.getUrl());
-            Glide.with(context).load(image.getUrl()).into(holder.itemPostBinding.ivPicture);
-            //Glide.with(context).load(post.getImage().getUrl()).into(holder.itemPostBinding.ivPicture);
+
+        //set background color change for posts
+        if(position % 2 == 0) {
+            holder.itemPostBinding.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange_light));
+        }else{
+            holder.itemPostBinding.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
-
-        holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
-
     }
 
     @Override

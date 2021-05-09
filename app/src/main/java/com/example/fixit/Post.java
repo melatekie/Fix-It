@@ -1,11 +1,23 @@
 package com.example.fixit;
 
+import android.content.Context;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @ParseClassName("Post")
 //@Parcel
@@ -65,7 +77,7 @@ public class Post extends ParseObject {
         return getNumber(String.valueOf(KEY_COMMENTS_COUNT));
     }
     public void setCommentsCount(Number commentsCount){
-        put(String.valueOf(KEY_COMMENTS_COUNT), commentsCount);
+        put(String.valueOf(KEY_COMMENTS_COUNT ), commentsCount);
     }
 
     //solved
@@ -75,6 +87,36 @@ public class Post extends ParseObject {
     public void setSolved(Boolean solved){
         put(String.valueOf(KEY_SOLVED), solved);
     }
+
+    //get hrs if within the day, else get time & date posted
+    public String getTimestamp() {
+        DateFormat df = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US );
+        Date now = new Date();
+        Date date = null;
+        try {
+            date = df.parse(getCreatedAt().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diffInMS = now.getTime() - date.getTime();
+        double diffInHours = diffInMS/3600000;
+        if(diffInHours < 24){
+            return TimeFormatter.getTimeDifference(getCreatedAt().toString());
+        }else{
+            return TimeFormatter.getTimeStamp(getCreatedAt().toString());
+        }
+    }
+
+
+
+    @BindingAdapter("QuestionImage")
+    public static void setImage(ImageView view, ParseFile image) {
+        Context context = view.getContext();
+        if(image != null){
+            Glide.with(context).load(image.getUrl()).into(view);
+        }
+    }
+
 
 
 
