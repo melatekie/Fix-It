@@ -96,42 +96,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
 
 
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        holder.itemPostBinding.btnCommentPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Comment comment = new Comment();
-                String user_input_comment = holder.itemPostBinding.etComment.getText().toString();
-                if (user_input_comment.isEmpty()){
-                    Log.i(TAG, "Empty comment");
-                    Toast.makeText(context, "comment cannot be empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                comment.setUserId(post.getAuthor());
-                comment.setComment(user_input_comment);
-                comment.setPostId(post);
-
-                comment.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error while saving", e);
-                            Log.i(TAG,  e.getMessage());
-                        }
-                        Log.i(TAG, "Comment save was successful");
-                        holder.itemPostBinding.etComment.setText("");
-                        //fragmentComposeBinding.ivPicture.setImageResource(0);
-                        //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
-
-                    }
-                });
-            }
-        });
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
     }
 
     @Override
