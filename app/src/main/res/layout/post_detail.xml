@@ -122,6 +122,18 @@
                 app:layout_anchor="@+id/appBarLayout2"
                 app:layout_anchorGravity="end|top" />
 
+            <TextView
+                android:id="@+id/tvLikesCount"
+                android:layout_width="22dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="360dp"
+                android:text=" "
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_anchor="@+id/appBarLayout2"
+                app:layout_anchorGravity="start|center" />
+
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

@@ -50,7 +50,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
         Comment comment = comments.get(position);
         holder.itemCommentBinding.tvComment.setText(comment.getComment());
-
     }
 
     @Override

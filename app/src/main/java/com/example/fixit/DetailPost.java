@@ -1,6 +1,7 @@
 package com.example.fixit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +25,8 @@ public class DetailPost extends AppCompatActivity {
 
     private PostDetailBinding postDetailBinding;
     public static final String TAG = "DetailPost";
+
+    private boolean likeClick;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +47,15 @@ public class DetailPost extends AppCompatActivity {
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
 
+
+
         postDetailBinding.setUser(user);
 
         postDetailBinding.setPost(post);
         postDetailBinding.tvQuestion.setText(post.getQuestion());
+
+        if(post.getLikesCount() != null)
+            postDetailBinding.tvLikesCount.setText(post.getLikesCount().toString());
 
         String temp = post.getCategory();
         if ( temp != null )
@@ -110,6 +119,61 @@ public class DetailPost extends AppCompatActivity {
         });
         // WILL BE MOVED TO DETAILED ACTVITITY
 
+        setLikeListener(post);
+
+    }
+
+    /*
+        Comment click counter
+        Start as false  to prevent multi-click likes
+        When clicked, set the icon to be bright red and increment the count by converting Number to Int then back to String as setText()
+        If clicked again with the condition of clicking beforehand, decrement the count and change the icon back to grey.
+
+        Then call saveInBackground to actually save it (don't be like me and think it was just incrementing the count and refreshing)
+     */
+    private void setLikeListener(final Post post){
+        likeClick = false;
+        postDetailBinding.ivLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!likeClick){
+                    postDetailBinding.ivLikes.setColorFilter(DetailPost.this.getResources().getColor(R.color.red));
+                    postDetailBinding.ivLikes.setImageDrawable(ContextCompat.getDrawable(DetailPost.this, R.drawable.heart));
+
+                    if (post.getLikesCount() == null || post.getLikesCount().intValue() == 0){
+                        post.setLikesCount(1);
+                    } else{
+                        post.setLikesCount(post.getLikesCount().intValue() + 1);
+                    }
+                } else {
+                    postDetailBinding.ivLikes.setColorFilter(Color.DKGRAY);
+                    postDetailBinding.ivLikes.setImageDrawable(ContextCompat.getDrawable(DetailPost.this, R.drawable.heartblank));
+                    post.setLikesCount(post.getLikesCount().intValue() - 1);
+                }
+
+                if (post.getLikesCount().intValue() == 0) {
+                    postDetailBinding.tvLikesCount.setText("0");
+                } else{
+                    postDetailBinding.tvLikesCount.setText( String.valueOf(post.getLikesCount().intValue()) );
+                }
+
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d("SaveLikes", "Save successful");
+                        } else {
+                            Log.d("SaveLikes", "Save failed");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                likeClick = !likeClick;
+
+                Toast.makeText(DetailPost.this,"Liked!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
