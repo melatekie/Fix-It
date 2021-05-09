@@ -27,12 +27,15 @@
 
         <!-- Customize TopAppBar Toolbar. -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+
+
+
         
     </style>
 
     <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
         <item name="textAllCaps">false</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
@@ -55,4 +58,8 @@
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/orange</item>
     </style>
+
+
+
+
 </resources>

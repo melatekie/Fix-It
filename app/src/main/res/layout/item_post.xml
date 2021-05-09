@@ -15,96 +15,196 @@
             type="com.example.fixit.User" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rlUser"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/backdrop"
+        android:layout_marginBottom="-35dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="3dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/grey_light" >
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
 
         tools:context=".PostsAdapter">
 
+
+
+        <RelativeLayout
+            android:id="@id/rlUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:loadImage="@{user}"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:layout_marginEnd="8dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="@{post.getAuthor().getUsername()}"
+                tools:text="username" />
+            <ImageView
+                android:id="@+id/ivProfCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tvUsername"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="@{user.getKeyIsProfessional()? View.VISIBLE : View.GONE}"
+                android:src="@drawable/home_check"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvUsername"
+                android:layout_toEndOf="@+id/ivProfileImage">
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="@{post.getTimestamp()}"
+                    tools:text="post time" />
+                <ImageView
+                    android:id="@+id/ivSolveNotIcon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/message_error"
+                    android:visibility="@{post.getSolved()? View.GONE : View.VISIBLE}"/>
+
+                <ImageView
+                    android:id="@+id/ivSolveIcon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/message_check"
+                    android:visibility="@{post.getSolved()? View.VISIBLE : View.GONE}" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
         <TextView
             android:id="@+id/tvQuestion"
-            android:layout_width="313dp"
-            android:layout_height="86dp"
-            android:layout_below="@+id/tvTime"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="49dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="170dp" />
-
-
-        <ImageView
-            android:id="@+id/ivProfileImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="20dp"
-            android:loadImage="@{user}"
-            />
-
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="23dp"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:text="@{post.getAuthor().getUsername()}" />
+            android:layout_below="@+id/rlUser"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="@{post.getQuestion()}"
+            tools:text="Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing " />
+
 
         <ImageView
             android:id="@+id/ivPicture"
-            android:layout_width="303dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_below="@+id/tvQuestion"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="54dp"
-            android:layout_marginTop="-170dp"
-            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            app:QuestionImage="@{post.getImage()}"
+            android:visibility="@{post.getImage()!=null? View.VISIBLE : View.GONE}"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tvTime"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:id="@+id/llCounts"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvUsername"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/ivProfileImage"
-            android:text="post time" />
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/ivPicture">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvLikesCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@{String.valueOf(post.getLikesCount())}"
+                android:visibility="@{post.getLikesCount()!=null ? View.VISIBLE : View.GONE}"
+                tools:text="4" />
+            <TextView
+                android:id="@+id/tvLikesCt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="LIKES"
+                android:visibility="@{post.getLikesCount()!=null ? View.VISIBLE : View.GONE}"
+                tools:text="LIKES" />
+
+            <TextView
+                android:id="@+id/tvCommentsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@{String.valueOf(post.getCommentsCount())}"
+                android:visibility="@{post.getCommentsCount()!=null ? View.VISIBLE : View.GONE}"
+                tools:text="4" />
+            <TextView
+                android:id="@+id/tvCommentsCt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="COMMENTS"
+                android:visibility="@{post.getCommentsCount()!=null ? View.VISIBLE : View.GONE}"
+                tools:text="COMMENTS" />
+
+        </LinearLayout>
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/btn"
+            android:background="?android:attr/listDivider" />
+        <RelativeLayout
+            android:id="@+id/btn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivPicture"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="307dp"
-            app:srcCompat="@drawable/message_check" />
-
-        <TextView
-            android:id="@+id/tvCommentsCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivPicture"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="259dp"
-            tools:text="cCount" />
-
-
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/llCounts"
+            android:layout_marginBottom="35dp">
+            <Button
+                android:id="@+id/btnLike"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                app:icon="@drawable/heart_outline"
+                android:text="LIKE" />
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                app:icon="@drawable/message_outline"
+                android:text=" COMMENT" />
+        </RelativeLayout>
 
 
     </RelativeLayout>
-
+</com.google.android.material.card.MaterialCardView>
 </layout>
