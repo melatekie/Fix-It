@@ -62,7 +62,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         user.setLastName(post.getAuthor().getString("lastName"));
         user.setIsProfessional(post.getAuthor().getBoolean("isProfessional"));
         if(post.getAuthor().getParseFile("profileImage")!=null){
-            user.setImage(user.getParseFile("profileImage"));
+            user.setImage(post.getAuthor().getParseFile("profileImage"));
         }
         holder.itemPostBinding.setUser(user);
         holder.itemPostBinding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
