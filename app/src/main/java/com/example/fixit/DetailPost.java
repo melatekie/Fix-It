@@ -119,6 +119,19 @@ public class DetailPost extends AppCompatActivity {
         });
         // WILL BE MOVED TO DETAILED ACTVITITY
 
+
+
+        postDetailBinding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailPost.this, UserProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
+                i.putExtra("ParseUser", Parcels.wrap(post.getAuthor()));
+                DetailPost.this.startActivity(i);
+            }
+        });
+
+
         setLikeListener(post);
 
     }
@@ -175,6 +188,9 @@ public class DetailPost extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 
