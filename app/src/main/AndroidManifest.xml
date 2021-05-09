@@ -33,10 +33,13 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
+        <activity android:name=".CommentActivity"/>
+        <activity android:name=".DetailPost" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

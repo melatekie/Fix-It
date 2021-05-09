@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="user"
+            type="com.example.fixit.User" />
+        <variable
+            name="professional"
+            type="com.example.fixit.Professional" />
+        <variable
+            name="post"
+            type="com.example.fixit.Post" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".CommentAdapter">
+
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="365dp"
+            android:layout_height="227dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="-1dp"
+            app:srcCompat="@drawable/commentbubble" />
+
+        <TextView
+            android:id="@+id/tvComment"
+            android:layout_width="293dp"
+            android:layout_height="78dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="64dp"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="41dp"
+            android:layout_height="42dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="165dp"
+            android:layout_marginEnd="368dp"
+            app:srcCompat="@drawable/default_img" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="169dp"
+            android:layout_marginTop="38dp"
+            android:text="@{post.getAuthor().getUsername()}" />
+
+
+    </RelativeLayout>
+
+
+
+</layout>
