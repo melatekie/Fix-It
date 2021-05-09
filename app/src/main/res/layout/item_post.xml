@@ -202,6 +202,37 @@
                 android:text=" COMMENT" />
         </RelativeLayout>
 
+        <!--        WILL BE MOVED TO DETAILED -->
+        <!--        WILL BE MOVED TO DETAILED -->
+        <!--        WILL BE MOVED TO DETAILED -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/commentLayout"
+            android:layout_below="@+id/btn"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="300dp"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/message_check"
+            android:hint="Add a comment...">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/btnCommentPost"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/commentLayout"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Post"/>
+        <!--        WILL BE MOVED TO DETAILED -->
+        <!--        WILL BE MOVED TO DETAILED -->
+
+
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
 </layout>
