@@ -74,6 +74,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 context.startActivity(i);
             }
         });
+
+        //Clicking on Question will pop out detail view
+        holder.itemPostBinding.tvQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DetailPost.class);
+                i.putExtra("user",Parcels.wrap(user));
+                i.putExtra("post", Parcels.wrap(post));
+                context.startActivity(i);
+            }
+        });
+
         ParseFile image = post.getImage();
         if(image!=null){
             //  Log.i("PostsAdapter",image.getUrl());
@@ -84,42 +96,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         holder.itemPostBinding.tvQuestion.setText(post.getQuestion());
 
 
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        holder.itemPostBinding.btnCommentPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Comment comment = new Comment();
-                String user_input_comment = holder.itemPostBinding.etComment.getText().toString();
-                if (user_input_comment.isEmpty()){
-                    Log.i(TAG, "Empty comment");
-                    Toast.makeText(context, "comment cannot be empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                comment.setUserId(post.getAuthor());
-                comment.setComment(user_input_comment);
-                comment.setPostId(post);
-
-                comment.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error while saving", e);
-                            Log.i(TAG,  e.getMessage());
-                        }
-                        Log.i(TAG, "Comment save was successful");
-                        holder.itemPostBinding.etComment.setText("");
-                        //fragmentComposeBinding.ivPicture.setImageResource(0);
-                        //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
-
-                    }
-                });
-            }
-        });
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
-        // WILL BE MOVED TO DETAILED ACTVITITY
     }
 
     @Override
@@ -129,19 +105,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     //Something weird is going on with databinding, it is not working so I will be using boilerplate for this one
     class ViewHolder extends RecyclerView.ViewHolder{
-        //        private TextView tvQuestion;
-//        private TextView tvUsername;
-//        private ImageView ivProfile;
-//        private ImageView ivPicture;
         ItemPostBinding itemPostBinding;
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//
-//            tvQuestion = itemView.findViewById(R.id.tvQuestion);
-//            tvUsername = itemView.findViewById(R.id.tvUsername);
-//            ivProfile = itemView.findViewById(R.id.ivProfileImage);
-//            ivPicture = itemView.findViewById(R.id.ivPicture);
-//        }
+
 
         public ViewHolder(ItemPostBinding itemPostBinding) {
             super(itemPostBinding.getRoot());
@@ -158,19 +123,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             notifyDataSetChanged();
         }
 
-//        public void itemPostBinding(Post post) {
-//
-//            ParseFile image = post.getImage();
-//
-////            tvQuestion.setText(post.getQuestion());
-////            tvUsername.setText(post.getAuthor().getUsername());
-//            itemPostBinding.tvQuestion.setText(post.getQuestion());
-//            itemPostBinding.tvUsername.setText(post.getAuthor().getUsername());
-//
-//            if (image != null)
-//                Glide.with(context).load(post.getImage().getUrl()).into(itemPostBinding.ivPicture);
-//
-//        }
     }
 
 
