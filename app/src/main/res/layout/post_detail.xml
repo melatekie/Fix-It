@@ -141,11 +141,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/commentLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCommentsCount"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="540dp"
+            android:layout_marginLeft="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
             android:hint="Add a comment..."
             app:startIconDrawable="@drawable/message_check">
 
@@ -160,80 +161,9 @@
             android:id="@+id/btnPost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/companyLayout"
 
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="158dp"
-            android:layout_marginBottom="5dp"
             android:text="Post" />
-
-
-        <!--        WILL BE MOVED TO DETAILED -->
-        <!--
-        <ImageView
-            android:id="@+id/ivComments"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_below="@+id/fragmentLayout"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="86dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/commentbubble" />
-
-        <ImageView
-            android:id="@+id/ivCommentProfile"
-            android:layout_width="54dp"
-            android:layout_height="53dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="29dp"
-            android:layout_toStartOf="@+id/ivComments"
-            app:srcCompat="@drawable/default_img" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="129dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivComments"
-            android:layout_alignEnd="@+id/ivComments"
-            android:layout_alignParentStart="true"
-
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="33dp"
-            android:layout_marginEnd="187dp"
-            android:text="Comment Name"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvComments"
-            android:layout_width="wrap_content"
-            android:layout_height="74dp"
-            android:layout_alignTop="@+id/ivComments"
-            android:layout_alignEnd="@+id/ivComments"
-            android:layout_alignParentStart="true"
-
-            android:layout_marginStart="77dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="20dp"
-            android:text="Comments"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvComments"
-            android:layout_alignStart="@+id/ivComments"
-            android:layout_alignEnd="@+id/ivComments"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="298dp"
-            app:srcCompat="@drawable/heart" />
-            -->
 
 
     </RelativeLayout>
