@@ -13,9 +13,9 @@ import android.view.View;
 
 import com.example.fixit.databinding.ActivityMainBinding;
 import com.example.fixit.fragments.ComposeFragment;
+import com.example.fixit.fragments.EditProfileFragment;
 import com.example.fixit.fragments.LogoutFragment;
 import com.example.fixit.fragments.PostsFragment;
-import com.example.fixit.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new PostsFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                        fragment = new EditProfileFragment();
                         break;
                     case R.id.action_logout:
                         fragment = new LogoutFragment();
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     default:
-                        fragment = new ProfileFragment();// placeholder
+                        fragment = new EditProfileFragment();// placeholder
                         // log out here
                         break;
                 }
