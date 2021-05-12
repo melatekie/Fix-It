@@ -25,32 +25,28 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="365dp"
-            android:layout_height="227dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="-1dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
             app:srcCompat="@drawable/commentbubble" />
 
         <TextView
             android:id="@+id/tvComment"
-            android:layout_width="293dp"
-            android:layout_height="78dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="108dp"
-            android:layout_marginTop="64dp"
+            android:layout_marginStart="87dp"
+            android:layout_marginTop="65dp"
             android:text="TextView" />
 
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="41dp"
+            android:layout_marginLeft="20dp"
             android:layout_height="42dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="165dp"
-            android:layout_marginEnd="368dp"
+            android:layout_below="@+id/imageView3"
             app:srcCompat="@drawable/default_img" />
 
         <TextView

@@ -11,15 +11,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.PostDetailBinding;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailPost extends AppCompatActivity {
 
@@ -28,11 +34,19 @@ public class DetailPost extends AppCompatActivity {
 
     private boolean likeClick;
 
+    private List<Comment> AllComments;
+    private CommentAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post_detail);
         postDetailBinding = DataBindingUtil.setContentView(this,R.layout.post_detail);
+
+        AllComments = new ArrayList<>();
+        adapter = new CommentAdapter(this,AllComments);
+        postDetailBinding.rvComment.setAdapter(adapter);
+        postDetailBinding.rvComment.setLayoutManager((new LinearLayoutManager(this)));
 
         //Back button
         postDetailBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -71,18 +85,6 @@ public class DetailPost extends AppCompatActivity {
 
 
 
-        postDetailBinding.ivReply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(DetailPost.this, CommentActivity.class);
-                i.putExtra("user",Parcels.wrap(user));
-                i.putExtra("post",Parcels.wrap(post));
-                i.putExtra("comment", Parcels.wrap(comment));
-
-                DetailPost.this.startActivity(i);
-
-            }
-        });
 
 
 
@@ -132,8 +134,32 @@ public class DetailPost extends AppCompatActivity {
         });
 
 
+        queryPosts();
         setLikeListener(post);
 
+    }
+
+    private void queryPosts() {
+        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
+        query.include(Comment.KEY_COMMENT);
+        query.setLimit(10);
+        //query.addDescendingOrder(Post.KEY_CREATED_AT);
+
+        query.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue getting posts", e);
+                    return;
+                }
+
+                for (Comment comment: comments){
+                    Log.i(TAG, "Post: " + comment.getComment());
+                }
+                AllComments.addAll(comments);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /*

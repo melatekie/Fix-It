@@ -18,7 +18,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:context=".DetailPost">
+        tools:context=".DetailPost"
+        android:layout_marginBottom="10dp">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/fragmentLayout"
@@ -26,127 +27,141 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appBarLayout2"
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:liftOnScroll="true">
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="373dp"
-
-                    app:navigationIcon="@drawable/ic_back">
-
-                    <TextView
-                        android:id="@+id/tvUsername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="false"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="340dp"
-                        android:foregroundGravity="center_horizontal"
-                        android:text="@{post.getAuthor().getUsername()}"
-                        android:textColor="@color/orange"
-                        android:textStyle="bold" />
-
-
-                </com.google.android.material.appbar.MaterialToolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
 
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_anchor="@+id/appBarLayout"
+                app:layout_anchorGravity="center"
+                app:navigationIcon="@drawable/ic_back">
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="false"
+                    android:layout_gravity="center_horizontal"
+                    android:foregroundGravity="center_horizontal"
+                    android:text="@{user.getKeyUsername()}"
+                    android:textColor="@color/orange"
+                    android:textStyle="bold" />
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
             <TextView
+                android:layout_below="@+id/ivProfileImage"
                 android:id="@+id/tvQuestion"
                 android:layout_width="320dp"
-                android:layout_height="75dp"
-                android:layout_marginBottom="180dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:text="@{post.getQuestion()}"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="center" />
+                />
 
             <ImageView
+                android:layout_marginTop="10dp"
                 android:id="@+id/ivProblem"
                 android:layout_width="174dp"
+                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="0dp"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="bottom|center"
+               android:layout_below="@+id/tvQuestion"
+                android:layout_marginBottom="10dp"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
                 android:id="@+id/ivProfileImage"
-                android:layout_width="54dp"
-                android:layout_height="53dp"
-                android:layout_margin="45dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+               android:layout_marginLeft="20dp"
                 android:loadImage="@{user}"
-                app:layout_anchor="@+id/appBarLayout2" />
+                android:layout_below="@+id/fragmentLayout"
+                />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="101dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/fragmentLayout"
+                android:layout_toEndOf="@+id/ivProfileImage"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="180dp"
-                android:layout_marginBottom="310dp"
+
                 android:text="Name"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                app:layout_anchor="@+id/tvQuestion"
-                app:layout_anchorGravity="top|center" />
-
+                 />
+        <TextView
+            android:id="@+id/tvLikesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text=" "
+            android:textSize="18sp"
+            android:layout_below="@id/ivProblem"
+            android:textStyle="bold"
+            />
             <ImageView
                 android:id="@+id/ivLikes"
                 android:layout_width="32dp"
+                android:layout_toEndOf="@+id/tvLikesCount"
                 android:layout_height="28dp"
                 android:layout_marginLeft="10dp"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="start|bottom"
+                android:layout_below="@id/ivProblem"
                 app:srcCompat="@drawable/heartblank" />
 
             <ImageView
                 android:id="@+id/ivReply"
                 android:layout_width="32dp"
                 android:layout_height="28dp"
-                android:layout_marginLeft="70dp"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="start|bottom"
+                android:layout_below="@id/ivProblem"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/ivLikes"
                 app:srcCompat="@drawable/message_check" />
 
             <TextView
                 android:id="@+id/tvCategory"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{post.getCategory()}"
+                android:text='@{"Category: "+post.getCategory()}'
                 android:textStyle="bold"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="end|top" />
+                android:layout_below="@id/ivProblem"
+                android:layout_alignParentRight="true"
+                android:paddingRight="20dp"
 
-            <TextView
-                android:id="@+id/tvLikesCount"
-                android:layout_width="22dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="44dp"
-                android:layout_marginTop="360dp"
-                android:text=" "
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_anchor="@+id/appBarLayout2"
-                app:layout_anchorGravity="start|center" />
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                />
 
 
-        <!--        WILL BE MOVED TO DETAILED -->
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvComment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ivLikes"
+            android:layout_marginTop="10dp"
+            android:layout_above="@+id/commentLayout"
+
+
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/commentLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCommentsCount"
             android:layout_marginLeft="40dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
             android:hint="Add a comment..."
             app:startIconDrawable="@drawable/message_check">
 
@@ -160,10 +175,15 @@
         <Button
             android:id="@+id/btnPost"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/companyLayout"
-
+            android:layout_toEndOf="@+id/commentLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/rvComment"
             android:text="Post" />
+
+
 
 
     </RelativeLayout>
