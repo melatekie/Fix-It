@@ -250,6 +250,7 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 * User Detailed profile
 * Cleaned up Compose and added disable/enable conditional 
 * Updated and began comment section 
+
 ![p1](https://user-images.githubusercontent.com/77254935/117904584-9d16e680-b29f-11eb-9cbe-31e19e3947ba.gif)![p2](https://user-images.githubusercontent.com/77254935/117904601-a2743100-b29f-11eb-896b-4f06a4cddad6.gif)
 
 
