@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.fixit.databinding.ActivityEditProfileBinding;
+
 import com.example.fixit.databinding.ActivityUserProfileBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;

@@ -9,8 +9,8 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
-        android:title="Profile"
-        android:icon="@drawable/selector_profile"
+        android:title="Edit Profile"
+        android:icon="@drawable/profile_edit"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_logout"

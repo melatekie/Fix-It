@@ -97,7 +97,7 @@ public class DetailPost extends AppCompatActivity {
                     Toast.makeText(DetailPost.this, "comment cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                comment.setUserId(post.getAuthor());
+                comment.setUserId(ParseUser.getCurrentUser());
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
 
