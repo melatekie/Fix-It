@@ -33,7 +33,6 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity android:name=".CommentActivity"/>
         <activity android:name=".DetailPost" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".SignUpActivity" />
