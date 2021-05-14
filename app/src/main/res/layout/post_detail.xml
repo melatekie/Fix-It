@@ -105,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text=" "
-            android:textColor="@color/red"
+            android:text="@{post.getLikesCount().toString()}"
+            android:textColor="#FF9800"
             android:textSize="18sp"
             android:layout_below="@id/ivProblem"
             android:textStyle="bold"
@@ -116,29 +116,32 @@
                 android:layout_width="32dp"
                 android:layout_toEndOf="@+id/tvLikesCount"
                 android:layout_height="28dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
+                app:tint="#FF9800"
                 android:layout_below="@id/ivProblem"
-                app:srcCompat="@drawable/heartblank" />
+                app:srcCompat="@drawable/heart_outline" />
         <TextView
             android:id="@+id/tvCommentCount"
+            android:textColor="#FF9800"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text=" "
-            android:textColor="@color/red"
+            android:text="@{post.getCommentsCount().toString()}"
             android:textSize="18sp"
             android:layout_toEndOf="@+id/ivLikes"
             android:layout_below="@id/ivProblem"
             android:textStyle="bold"
             />
-            <ImageView
-                android:id="@+id/ivReply"
-                android:layout_width="32dp"
-                android:layout_height="28dp"
-                android:layout_below="@id/ivProblem"
-                android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/tvCommentCount"
-                app:srcCompat="@drawable/message_check" />
+
+        <ImageView
+            android:id="@+id/ivReply"
+            android:layout_width="32dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/ivProblem"
+            android:layout_marginLeft="6dp"
+            android:layout_toEndOf="@+id/tvCommentCount"
+            app:srcCompat="@drawable/message_outline"
+            app:tint="#FF9800" />
 
             <TextView
                 android:id="@+id/tvCategory"

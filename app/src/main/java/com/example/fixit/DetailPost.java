@@ -87,9 +87,6 @@ public class DetailPost extends AppCompatActivity {
 
 
 
-
-
-        // WILL BE MOVED TO DETAILED ACTVITITY
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +101,8 @@ public class DetailPost extends AppCompatActivity {
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
 
+                post.setCommentsCount(post.getCommentsCount().intValue()+1);
+
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -113,14 +112,17 @@ public class DetailPost extends AppCompatActivity {
                         }
                         Log.i(TAG, "Comment save was successful");
                         postDetailBinding.etComment.setText("");
+                        adapter.clear();
+                        queryPosts();
+
                         //fragmentComposeBinding.ivPicture.setImageResource(0);
                         //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
 
                     }
                 });
+
             }
         });
-        // WILL BE MOVED TO DETAILED ACTVITITY
 
 
 

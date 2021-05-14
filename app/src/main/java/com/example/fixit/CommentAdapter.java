@@ -67,7 +67,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
     }
+    public void clear() {
+        comments.clear();
+        notifyDataSetChanged();
+    }
 
+    // Add a list of items -- change to type used
+    public void addAll(List<Comment> list) {
+        comments.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return comments.size();
@@ -81,16 +90,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             super(itemCommentBinding.getRoot());
             this.itemCommentBinding = itemCommentBinding;
         }
-        public void clear() {
-            comments.clear();
-            notifyDataSetChanged();
-        }
 
-        // Add a list of items -- change to type used
-        public void addAll(List<Comment> list) {
-            comments.addAll(list);
-            notifyDataSetChanged();
-        }
 
     }
 
