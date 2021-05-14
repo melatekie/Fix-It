@@ -8,12 +8,7 @@
         <variable
             name="user"
             type="com.example.fixit.User" />
-        <variable
-            name="professional"
-            type="com.example.fixit.Professional" />
-        <variable
-            name="post"
-            type="com.example.fixit.Post" />
+
 
     </data>
 
@@ -23,41 +18,54 @@
         tools:context=".CommentAdapter">
 
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="300dp"
+        <RelativeLayout android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            app:srcCompat="@drawable/commentbubble" />
+            android:layout_marginTop="10dp"
 
-        <TextView
-            android:id="@+id/tvComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="87dp"
-            android:layout_marginTop="65dp"
-            android:text="TextView" />
+            android:layout_marginBottom="5dp"
+
+            android:layout_centerHorizontal="true"
+            android:id="@+id/rlComment">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_alignTop="@id/tvComment"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_alignBottom="@id/tvComment"
+                android:scaleType="fitXY"
+                android:src="@drawable/commentbubble" />
+
+            <TextView
+                android:id="@+id/tvComment"
+                android:padding="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                />
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="41dp"
             android:layout_marginLeft="20dp"
             android:layout_height="42dp"
-            android:layout_below="@+id/imageView3"
-            app:srcCompat="@drawable/default_img" />
+            android:layout_below="@+id/rlComment"
+            android:loadImage="@{user}" />
 
         <TextView
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="169dp"
-            android:layout_marginTop="38dp"
-            android:text="@{post.getAuthor().getUsername()}" />
+            android:layout_below="@+id/ivProfile"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:text="@{user.getKeyUsername()}" />
 
 
     </RelativeLayout>

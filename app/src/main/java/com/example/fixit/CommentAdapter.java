@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemCommentBinding;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
@@ -25,8 +28,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public static final String TAG = "CommentAdapter";
     private ItemCommentBinding itemCommentBinding;
 
-    Context context;
-    List<Comment> comments;
+    private Context context;
+    private List<Comment> comments;
 
 
     public CommentAdapter(Context context, List<Comment> comments){
@@ -46,10 +49,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
         Comment comment = comments.get(position);
         holder.itemCommentBinding.tvComment.setText(comment.getComment());
+        ParseUser parseuser = comment.getUserId();
+
+        User user = new User();
+        user.setObjectID(parseuser.getObjectId());
+        if(parseuser.getParseFile(User.KEY_PROFILE_IMAGE)!=null){
+            user.setImage(parseuser.getParseFile(User.KEY_PROFILE_IMAGE));
+        }
+        user.setUsername(parseuser.getUsername());
+        user.setLastName(parseuser.getString(User.KEY_LAST_NAME));
+        user.setFirstName(parseuser.getString(User.KEY_FIRST_NAME));
+        user.setIsProfessional(parseuser.getBoolean(User.KEY_IS_PROFESSIONAL));
+        itemCommentBinding.setUser(user);
+
+
+
     }
 
     @Override

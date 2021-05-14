@@ -106,6 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text=" "
+            android:textColor="@color/red"
             android:textSize="18sp"
             android:layout_below="@id/ivProblem"
             android:textStyle="bold"
@@ -118,14 +119,25 @@
                 android:layout_marginLeft="10dp"
                 android:layout_below="@id/ivProblem"
                 app:srcCompat="@drawable/heartblank" />
-
+        <TextView
+            android:id="@+id/tvCommentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text=" "
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:layout_toEndOf="@+id/ivLikes"
+            android:layout_below="@id/ivProblem"
+            android:textStyle="bold"
+            />
             <ImageView
                 android:id="@+id/ivReply"
                 android:layout_width="32dp"
                 android:layout_height="28dp"
                 android:layout_below="@id/ivProblem"
                 android:layout_marginLeft="10dp"
-                android:layout_toEndOf="@+id/ivLikes"
+                android:layout_toEndOf="@+id/tvCommentCount"
                 app:srcCompat="@drawable/message_check" />
 
             <TextView
