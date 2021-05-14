@@ -101,7 +101,7 @@ public class DetailPost extends AppCompatActivity {
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
 
-                post.setCommentsCount(post.getCommentsCount().intValue()+1);
+
 
                 comment.saveInBackground(new SaveCallback() {
                     @Override
@@ -111,6 +111,8 @@ public class DetailPost extends AppCompatActivity {
                             Log.i(TAG,  e.getMessage());
                         }
                         Log.i(TAG, "Comment save was successful");
+                        post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
                         adapter.clear();
                         queryPosts();
