@@ -18,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemPostBinding;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
@@ -38,6 +41,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context context;
     private List<Post> posts;
     private ItemPostBinding itemPostBinding;
+    private String postQuestion;
 
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
@@ -56,6 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.itemPostBinding.setPost(post);
+
 
         User user= new User();
 //        user.setEmail(String.valueOf(post.getAuthor().getString("email")));
@@ -88,6 +93,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 context.startActivity(i);
             }
         });
+
+        /*
+        holder.itemPostBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postQuestion = post.getQuestion().toString();
+                Toast.makeText(context, "postQuestion: " + postQuestion.toString(), Toast.LENGTH_SHORT).show();
+                deletePost(postQuestion);
+            }
+        }); */
 
 
         //set background color change for posts
@@ -125,6 +140,35 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         }
 
     }
+
+
+/*
+    private void deletePost(String postQuestion){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("question");
+
+
+        query.whereEqualTo("question", postQuestion);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null){
+                    objects.get(0).deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null){
+                                Toast.makeText(context, "Post Deleted", Toast.LENGTH_SHORT).show();
+
+                            } else{
+                                Toast.makeText(context, "Post failed to delete", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                } else{
+                    Toast.makeText(context, "Failed to get object", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    } */
 
 
 }

@@ -15,10 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.PostDetailBinding;
+import com.example.fixit.fragments.ComposeFragment;
+import com.example.fixit.fragments.PictureFragment;
+import com.example.fixit.fragments.PostsFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
@@ -47,6 +51,10 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.rvComment.setAdapter(adapter);
         postDetailBinding.rvComment.setLayoutManager((new LinearLayoutManager(this)));
 
+        User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
+
         //Back button
         postDetailBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,9 +64,20 @@ public class DetailPost extends AppCompatActivity {
             }
         });
 
-        User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
-        Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
-        Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
+
+        //On Click to pop out image
+        postDetailBinding.ivProblem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+
+                bundle.putParcelable("post", post);
+                PictureFragment pictureFragment = new PictureFragment();
+                pictureFragment.setArguments(bundle);
+                pictureFragment.show(getSupportFragmentManager(), "it works!");
+            }
+        });
+
 
 
 
