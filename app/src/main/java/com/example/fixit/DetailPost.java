@@ -19,6 +19,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
@@ -35,7 +36,7 @@ public class DetailPost extends AppCompatActivity {
 
     private List<Comment> AllComments;
     private CommentAdapter adapter;
-
+    private Post currentPost ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class DetailPost extends AppCompatActivity {
 
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        currentPost = post;
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
 
 
@@ -85,9 +87,6 @@ public class DetailPost extends AppCompatActivity {
 
 
 
-
-
-        // WILL BE MOVED TO DETAILED ACTVITITY
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +101,8 @@ public class DetailPost extends AppCompatActivity {
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
 
+
+
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -110,15 +111,20 @@ public class DetailPost extends AppCompatActivity {
                             Log.i(TAG,  e.getMessage());
                         }
                         Log.i(TAG, "Comment save was successful");
+                        post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
+                        adapter.clear();
+                        queryPosts();
+
                         //fragmentComposeBinding.ivPicture.setImageResource(0);
                         //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
 
                     }
                 });
+
             }
         });
-        // WILL BE MOVED TO DETAILED ACTVITITY
 
 
 
@@ -140,10 +146,10 @@ public class DetailPost extends AppCompatActivity {
 
     private void queryPosts() {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
-        query.include(Comment.KEY_COMMENT);
+        query.whereEqualTo(Comment.KEY_POSTID, currentPost);
         query.setLimit(10);
-        //query.addDescendingOrder(Post.KEY_CREATED_AT);
-
+        query.include(Comment.KEY_USERID);
+        query.addDescendingOrder(Comment.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> comments, ParseException e) {
