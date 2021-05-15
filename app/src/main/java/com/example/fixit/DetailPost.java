@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.PostDetailBinding;
+import com.example.fixit.fragments.PictureFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -57,10 +58,26 @@ public class DetailPost extends AppCompatActivity {
             }
         });
 
+
+
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         currentPost = post;
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
+
+
+        //On Click to pop out image
+        postDetailBinding.ivEnlarge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+
+                bundle.putParcelable("post", post);
+                PictureFragment pictureFragment = new PictureFragment();
+                pictureFragment.setArguments(bundle);
+                pictureFragment.show(getSupportFragmentManager(), "it works!");
+            }
+        });
 
 
 
@@ -79,10 +96,14 @@ public class DetailPost extends AppCompatActivity {
         //Image with conditional to prevent crash  if  null
 
         postDetailBinding.tvName.setText(user.getFirstName() + " " + user.getLastName());
+
+        /*
         ParseFile image = post.getImage();
         if (image != null){
             Glide.with(this).load(image.getUrl()).into(postDetailBinding.ivProblem);
         }
+
+         */
 
 
 
