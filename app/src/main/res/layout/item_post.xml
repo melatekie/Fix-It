@@ -202,6 +202,15 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 app:icon="@drawable/message_outline"
                 android:text=" COMMENT" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="62dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="150dp"
+                android:layout_marginBottom="0dp"
+                android:text="Button"
+                android:visibility="gone" />
         </RelativeLayout>
 
 
