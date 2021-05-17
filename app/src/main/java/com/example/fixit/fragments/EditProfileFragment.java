@@ -86,13 +86,7 @@ public class EditProfileFragment extends Fragment {
 
 
         fragmentEditProfileBinding.setUser(user);
-        fragmentEditProfileBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
+
         fragmentEditProfileBinding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

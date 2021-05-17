@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityMainBinding;
     private BottomNavigationView bottomNavigationView;
-    private FloatingActionButton fabCompose;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,19 +66,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.action_home);
-
-
-        activityMainBinding.fabCompose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ComposeFragment composefragment = new ComposeFragment();
-                composefragment.show(getSupportFragmentManager(),"Testing Dialog Fragment!");
-
-                //Intent i = new Intent(v.getContext(), ComposeActivity.class);
-                //startActivity(i);
-            }
-        });
 
         //queryPost();              //FOR TESTING PURPOSES
 

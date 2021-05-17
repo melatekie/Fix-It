@@ -42,7 +42,6 @@ public class User extends ParseObject {
     public String getKeyObjectID() { return getString(KEY_OBJECT_ID); }
     public void setObjectID(String id) {put(KEY_OBJECT_ID, id); }
 
-
     //First Name
     public String getFirstName(){
         return getString(KEY_FIRST_NAME);

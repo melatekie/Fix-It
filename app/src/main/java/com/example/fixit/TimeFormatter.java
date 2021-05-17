@@ -1,5 +1,6 @@
 package com.example.fixit;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -72,5 +73,24 @@ public class TimeFormatter {
             e.printStackTrace();
         }
         return time;
+    }
+
+    //get hrs if within the day, else get time & date posted
+    public static String getTimeFormatter(String rawJsonDate) {
+        DateFormat df = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US );
+        Date now = new Date();
+        Date date = null;
+        try {
+            date = df.parse(rawJsonDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long diffInMS = now.getTime() - date.getTime();
+        double diffInHours = diffInMS/3600000;
+        if(diffInHours < 24){
+            return TimeFormatter.getTimeDifference(rawJsonDate);
+        }else{
+            return TimeFormatter.getTimeStamp(rawJsonDate);
+        }
     }
 }

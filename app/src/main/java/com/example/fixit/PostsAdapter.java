@@ -56,6 +56,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.itemPostBinding.setPost(post);
+        Comment comment = new Comment();
 
         User user= new User();
 //        user.setEmail(String.valueOf(post.getAuthor().getString("email")));

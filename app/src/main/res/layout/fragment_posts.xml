@@ -21,5 +21,16 @@
             />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabCompose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:icon="@drawable/home_edit_outline"
+            android:textStyle="bold"
+            android:text="Compose"/>
+
     </FrameLayout>
 </layout>
