@@ -14,7 +14,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.fixit.databinding.PostDetailBinding;
+import com.example.fixit.fragments.PictureFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -36,7 +38,7 @@ public class DetailPost extends AppCompatActivity {
 
     private List<Comment> AllComments;
     private CommentAdapter adapter;
-
+    private Post currentPost ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +54,30 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MainActivity.class);
-                startActivity(i);
+                finish();
             }
         });
 
+
+
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        currentPost = post;
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
+
+
+        //On Click to pop out image
+        postDetailBinding.ivEnlarge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+
+                bundle.putParcelable("post", post);
+                PictureFragment pictureFragment = new PictureFragment();
+                pictureFragment.setArguments(bundle);
+                pictureFragment.show(getSupportFragmentManager(), "it works!");
+            }
+        });
 
 
 
@@ -78,17 +96,40 @@ public class DetailPost extends AppCompatActivity {
         //Image with conditional to prevent crash  if  null
 
         postDetailBinding.tvName.setText(user.getFirstName() + " " + user.getLastName());
+
+        /*
         ParseFile image = post.getImage();
         if (image != null){
             Glide.with(this).load(image.getUrl()).into(postDetailBinding.ivProblem);
         }
 
+         */
+
+        //get current user image
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        User user1 = new User();
+        user1.setIsProfessional(currentUser.getBoolean("isProfessional"));
+        if(currentUser.getParseFile("profileImage") != null) {
+            user1.setImage(currentUser.getParseFile("profileImage"));
+        }
+        user.loadImage(postDetailBinding.ivProfileSelf, user1);
+
+        /*Professional currentUserProf = new Professional();
+        currentUserProf.setUser(currentUser);
 
 
+        //able to see self profile TODO not working for professional
+        postDetailBinding.ivProfileSelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailPost.this, UserProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(currentUser));
+                i.putExtra("ParseUser", Parcels.wrap(user1));
+                i.putExtra("Professional", Parcels.wrap(currentUserProf));
+                DetailPost.this.startActivity(i);
+            }
+        });*/
 
-
-
-        // WILL BE MOVED TO DETAILED ACTVITITY
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +144,8 @@ public class DetailPost extends AppCompatActivity {
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
 
+
+
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -111,15 +154,20 @@ public class DetailPost extends AppCompatActivity {
                             Log.i(TAG,  e.getMessage());
                         }
                         Log.i(TAG, "Comment save was successful");
+                        post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
+                        adapter.clear();
+                        queryPosts();
+
                         //fragmentComposeBinding.ivPicture.setImageResource(0);
                         //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
 
                     }
                 });
+
             }
         });
-        // WILL BE MOVED TO DETAILED ACTVITITY
 
 
 
@@ -141,10 +189,10 @@ public class DetailPost extends AppCompatActivity {
 
     private void queryPosts() {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
-        query.include(Comment.KEY_COMMENT);
+        query.whereEqualTo(Comment.KEY_POSTID, currentPost);
         query.setLimit(10);
-        //query.addDescendingOrder(Post.KEY_CREATED_AT);
-
+        query.include(Comment.KEY_USERID);
+        query.addDescendingOrder(Comment.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> comments, ParseException e) {

@@ -31,8 +31,8 @@
                     android:id="@+id/topAppBar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-
-                    >
+                    app:menu="@menu/topbar_edit_profile"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
                     <TextView
                         android:id="@+id/tvUsername"

@@ -38,26 +38,13 @@ xmlns:tools="http://schemas.android.com/tools">
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_anchor="@+id/appBarLayout"
-            app:layout_anchorGravity="center"
-            app:navigationIcon="@drawable/ic_back">
-
-            <TextView
-                android:id="@+id/tvUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="false"
-                android:layout_gravity="center_horizontal"
-                android:foregroundGravity="center_horizontal"
-                android:text="@{user.getKeyUsername()}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                tools:text="regularuser" />
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@{user.getKeyUsername()}"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 
-        </com.google.android.material.appbar.MaterialToolbar>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+          </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <ImageView
         android:id="@+id/ivProfileImage"

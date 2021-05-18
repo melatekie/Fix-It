@@ -1,6 +1,7 @@
 package com.example.fixit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemCommentBinding;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
@@ -25,8 +29,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public static final String TAG = "CommentAdapter";
     private ItemCommentBinding itemCommentBinding;
 
-    Context context;
-    List<Comment> comments;
+    private Context context;
+    private List<Comment> comments;
 
 
     public CommentAdapter(Context context, List<Comment> comments){
@@ -46,12 +50,43 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
         Comment comment = comments.get(position);
         holder.itemCommentBinding.tvComment.setText(comment.getComment());
+        holder.itemCommentBinding.tvTime.setText(comment.getTimestamp());
+        ParseUser parseuser = comment.getUserId();
+
+        User user = new User();
+        user.setObjectID(parseuser.getObjectId());
+        if(parseuser.getParseFile(User.KEY_PROFILE_IMAGE)!=null){
+            user.setImage(parseuser.getParseFile(User.KEY_PROFILE_IMAGE));
+        }
+        user.setUsername(parseuser.getUsername());
+        user.setLastName(parseuser.getString(User.KEY_LAST_NAME));
+        user.setFirstName(parseuser.getString(User.KEY_FIRST_NAME));
+        user.setIsProfessional(parseuser.getBoolean(User.KEY_IS_PROFESSIONAL));
+        holder.itemCommentBinding.setUser(user);
+
+        itemCommentBinding.ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, UserProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
+                i.putExtra("ParseUser", Parcels.wrap(parseuser));
+                context.startActivity(i);
+            }
+        });
+
+    }
+    public void clear() {
+        comments.clear();
+        notifyDataSetChanged();
     }
 
+    // Add a list of items -- change to type used
+    public void addAll(List<Comment> list) {
+        comments.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
         return comments.size();
@@ -65,16 +100,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             super(itemCommentBinding.getRoot());
             this.itemCommentBinding = itemCommentBinding;
         }
-        public void clear() {
-            comments.clear();
-            notifyDataSetChanged();
-        }
 
-        // Add a list of items -- change to type used
-        public void addAll(List<Comment> list) {
-            comments.addAll(list);
-            notifyDataSetChanged();
-        }
 
     }
 
