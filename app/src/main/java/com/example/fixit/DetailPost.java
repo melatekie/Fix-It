@@ -55,7 +55,8 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent i = new Intent(DetailPost.this, LoginActivity.class);
+                startActivity(i);
             }
         });
 
@@ -116,8 +117,8 @@ public class DetailPost extends AppCompatActivity {
         User.loadImage(postDetailBinding.ivProfileSelf, user1);
 
         /*Professional currentUserProf = new Professional();
-        currentUserProf.setUser(currentUser);
-
+        //currentUserProf.setUser(currentUser.getObjectId());
+        Log.i(TAG,  "Prof: " +currentUserProf.getUser()+" currentUser: "+currentUser.getObjectId());
 
         //able to see self profile TODO not working for professional
         postDetailBinding.ivProfileSelf.setOnClickListener(new View.OnClickListener() {
@@ -131,9 +132,10 @@ public class DetailPost extends AppCompatActivity {
             }
         });*/
 
-        //postDetailBinding.ivSolve.setVisibility(View.INVISIBLE);
-        //if(currentPost.getAuthor() == currentUser){
-            //postDetailBinding.ivSolve.setVisibility(View.VISIBLE);
+        //Post creator can set problem to solved/unsolved
+        postDetailBinding.ivSolve.setVisibility(View.INVISIBLE);
+        if(post.getAuthor().getObjectId().equals(currentUser.getObjectId())){
+            postDetailBinding.ivSolve.setVisibility(View.VISIBLE);
             //checks if problem has been solved
             if(!post.getSolved()){
                 postDetailBinding.ivSolve.setChecked(false);
@@ -147,34 +149,33 @@ public class DetailPost extends AppCompatActivity {
             }
 
             //button to set solved or unsolved
-        postDetailBinding.ivSolve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            postDetailBinding.ivSolve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
-                if (isChecked){
-                    postDetailBinding.ivSolve.setChecked(true);
-                    postDetailBinding.ivSolve.setText("SOLVED");
-                    post.setSolved(true);
-                }
-                if(!isChecked){
-                    postDetailBinding.ivSolve.setChecked(false);
-                    postDetailBinding.ivSolve.setText("UNSOLVED");
-                    post.setSolved(false);
-                }
-                post.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.i(TAG,  e.getMessage());
-                        }else{
-                            Log.i(TAG,  "Set Solved Field");
-                        }
+                    if (isChecked){
+                        postDetailBinding.ivSolve.setChecked(true);
+                        postDetailBinding.ivSolve.setText("SOLVED");
+                        post.setSolved(true);
                     }
-                });
-            }
-        });
-
-        //}
+                    if(!isChecked){
+                        postDetailBinding.ivSolve.setChecked(false);
+                        postDetailBinding.ivSolve.setText("UNSOLVED");
+                        post.setSolved(false);
+                    }
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.i(TAG,  e.getMessage());
+                            }else{
+                                Log.i(TAG,  "Set Solved Field");
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
 
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
