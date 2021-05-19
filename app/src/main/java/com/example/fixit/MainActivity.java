@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_profile:
                         fragment = new EditProfileFragment();
                         break;
-                    case R.id.action_logout:
+                    /*case R.id.action_logout:
                         fragment = new LogoutFragment();
                         ParseUser.logOut();
                         ParseUser currentLoggedUser = ParseUser.getCurrentUser();
                         goLoginActivity();
-                        break;
+                        break;*/
 
                     default:
                         fragment = new EditProfileFragment();// placeholder

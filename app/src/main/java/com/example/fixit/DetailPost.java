@@ -118,6 +118,7 @@ public class DetailPost extends AppCompatActivity {
 
         /*Professional currentUserProf = new Professional();
         //currentUserProf.setUser(currentUser.getObjectId());
+
         Log.i(TAG,  "Prof: " +currentUserProf.getUser()+" currentUser: "+currentUser.getObjectId());
 
         //able to see self profile TODO not working for professional
@@ -136,7 +137,7 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.ivSolve.setVisibility(View.INVISIBLE);
         if(post.getAuthor().getObjectId().equals(currentUser.getObjectId())){
             postDetailBinding.ivSolve.setVisibility(View.VISIBLE);
-            //checks if problem has been solved
+            //checks if post has been solved
             if(!post.getSolved()){
                 postDetailBinding.ivSolve.setChecked(false);
                 postDetailBinding.ivSolve.setText("UNSOLVED");
@@ -147,7 +148,6 @@ public class DetailPost extends AppCompatActivity {
                 postDetailBinding.ivSolve.setText("SOLVED");
                 Log.i(TAG,  "solve is true");
             }
-
             //button to set solved or unsolved
             postDetailBinding.ivSolve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
