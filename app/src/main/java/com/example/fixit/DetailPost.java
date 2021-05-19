@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -64,7 +65,7 @@ public class DetailPost extends AppCompatActivity {
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         currentPost = post;
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
-
+        ParseUser currentUser = ParseUser.getCurrentUser();
 
         //On Click to pop out image
         postDetailBinding.ivEnlarge.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +107,13 @@ public class DetailPost extends AppCompatActivity {
          */
 
         //get current user image
-        ParseUser currentUser = ParseUser.getCurrentUser();
         User user1 = new User();
+        user1.setObjectID(currentUser.getObjectId());
         user1.setIsProfessional(currentUser.getBoolean("isProfessional"));
         if(currentUser.getParseFile("profileImage") != null) {
             user1.setImage(currentUser.getParseFile("profileImage"));
         }
-        user.loadImage(postDetailBinding.ivProfileSelf, user1);
+        User.loadImage(postDetailBinding.ivProfileSelf, user1);
 
         /*Professional currentUserProf = new Professional();
         currentUserProf.setUser(currentUser);
@@ -130,6 +131,52 @@ public class DetailPost extends AppCompatActivity {
             }
         });*/
 
+        //postDetailBinding.ivSolve.setVisibility(View.INVISIBLE);
+        //if(currentPost.getAuthor() == currentUser){
+            //postDetailBinding.ivSolve.setVisibility(View.VISIBLE);
+            //checks if problem has been solved
+            if(!post.getSolved()){
+                postDetailBinding.ivSolve.setChecked(false);
+                postDetailBinding.ivSolve.setText("UNSOLVED");
+                Log.i(TAG,  "solve is false: " + post.getSolved());
+            }
+            if(post.getSolved()){
+                postDetailBinding.ivSolve.setChecked(true);
+                postDetailBinding.ivSolve.setText("SOLVED");
+                Log.i(TAG,  "solve is true");
+            }
+
+            //button to set solved or unsolved
+        postDetailBinding.ivSolve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (isChecked){
+                    postDetailBinding.ivSolve.setChecked(true);
+                    postDetailBinding.ivSolve.setText("SOLVED");
+                    post.setSolved(true);
+                }
+                if(!isChecked){
+                    postDetailBinding.ivSolve.setChecked(false);
+                    postDetailBinding.ivSolve.setText("UNSOLVED");
+                    post.setSolved(false);
+                }
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.i(TAG,  e.getMessage());
+                        }else{
+                            Log.i(TAG,  "Set Solved Field");
+                        }
+                    }
+                });
+            }
+        });
+
+        //}
+
+
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,9 +190,7 @@ public class DetailPost extends AppCompatActivity {
                 comment.setUserId(ParseUser.getCurrentUser());
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
-
-
-
+                
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -154,7 +199,13 @@ public class DetailPost extends AppCompatActivity {
                             Log.i(TAG,  e.getMessage());
                         }
                         Log.i(TAG, "Comment save was successful");
-                        post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        if(post.getCommentsCount() != null){
+                            post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        }else {
+                            post.setCommentsCount(1);
+                        }
+
+                        post.saveInBackground();
                         postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
                         adapter.clear();
@@ -186,6 +237,8 @@ public class DetailPost extends AppCompatActivity {
         setLikeListener(post);
 
     }
+
+
 
     private void queryPosts() {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);

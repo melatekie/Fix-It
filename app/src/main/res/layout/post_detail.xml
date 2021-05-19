@@ -85,6 +85,46 @@
                         android:layout_marginEnd="8dp"
                         android:visibility="@{user.getKeyIsProfessional()? View.VISIBLE : View.GONE}"
                         android:src="@drawable/home_check"/>
+                    <!--ToggleButton
+                        android:id="@+id/ivSolve"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:background="@drawable/selector_message_check"
+                        android:textOn="SOLVED"
+                        android:textOff="UNSOLVED"
+                        android:textColor="@color/solved_icon_color"
+                        app:iconTint="@color/solved_icon_color"
+                        android:enabled="false"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-6dp"
+                         /-->
+                    <!--Button
+                        android:id="@+id/ivSolve"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        app:icon="@drawable/selector_message_check"
+                        android:text="UNSOLVED"
+                        android:textColor="@color/solved_icon_color"
+                        app:iconTint="@color/solved_icon_color"
+                        android:enabled="false"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-6dp"
+                         /-->
+                    <CheckBox
+                        android:id="@+id/ivSolve"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:button="@drawable/selector_message_check"
+
+                        android:textColor="@color/solved_icon_color"
+                        app:buttonTint="@color/solved_icon_color"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-6dp"
+                        />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
