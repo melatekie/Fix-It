@@ -31,27 +31,55 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 **Required Must-have Stories**
 
 * Login
+    - Users log in with their username and password
+    - Log in button disabled when username or password are empty
+    - Has a button to Sign Up Activity
 * Register
-    - User/Professional
-* Home (User)
-    - Create posts
+    - Switches between sign up with User or Professional
+    - Users can enter to Main Activity immediately after sign up
+    - Professionals are brought back to Log In Activity after sign up
+    - Goes back to Log In Activity with back button
+* Home
+    - Users can create posts
+    - Users can delete their own posts
+    - Able to pull down refresh
+    - Able to infinite scroll
+    - Displays user profile, username, post timestamp, post description, post image, Likes count, Comments count, post solved/unsolved
+    - Button to go into Detail Post Activity
+    - Profile image gets into user profile
+    - Compose button shrinks when scrolled
+    - Bottom navigation has options to Home and Edit Profile
+    - Professional has verified check icon next to their username
     - menu to categories
-    - Respond to posts as 'user' tag
-* Home (Professional)
-    * menu to categories
-    * Answer posts with 'professional' tag
-    * Unable to create new posts 
+* Edit Profile
+    - Users able to edit their information except username, first and last name
+    - Displays profile image and data from Database
+    - Log out button in action bar 
 * Profile (user)
     * Basic information of user 
+    * Back button gets back to previous screen
 * Profile (professional)
     * Verification of identity
+    * Displays rating
     * Basic information and profession
-* Detail
-    * image (not required)
-    * question
-    * report functionality 
-
-
+    * Back button gets back to previous screen
+* Compose
+    - Popup overlay with a message icon as background
+    - Category and descriptions are required information
+    - Camera button to take image. Shows image before being saved.
+    - Post button disabled if description is empty 
+* Detail Post
+    - Back button takes user back to Home Activity
+    - Action bar displays username of post creator and beginning of description
+    - Displays similar info as Home Activity 
+    - Full image button shows a popup with the full image
+    - Tag for its category
+    - Current user can reply to post
+    - Current user profile image displays next to reply space
+    - All related comments are displays for post
+    - Replied comments displays user profile image, username, description, time difference
+    - Users can delete their own comments
+    
 
 **Optional Nice-to-have Stories**
 * Tips to pop up when open app
@@ -101,22 +129,28 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 
 **Tab Navigation (bottom)** (Tab to Screen)
 
-* Detail
 * Home
-* Create
 * Account
 
 **Flow Navigation** (Screen to Screen)
 * Login
     - Home
+    - Register
 * Register
-    - Login
+    - back to Login
+    - Home
 * Home
-    - Detail
-* Setting
-    * Login
-* Account 
-    * Home
+    - Detail Post
+    - User Profile
+    - Compose
+* Edit Profile
+    - Log out button to Log in 
+* Detail Post
+    - back to previous 
+* User Profile
+    - back to previous 
+* Compose
+    - Home
 * LogOut
     * Login
 
@@ -185,6 +219,17 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
    | solved     | Boolean | user can mark the post if it the question gets resolved |
    | category     | String | category of user's post |
 
+#### Comment
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user account(default field) |
+   | postId       | String   | unique id of post |
+   | userId      | String   | unique id of user |
+   | comment        | String   | user's reply to post |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   
 
 ### Networking
 #### List of network requests by screen
