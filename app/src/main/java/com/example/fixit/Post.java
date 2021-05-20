@@ -90,23 +90,8 @@ public class Post extends ParseObject {
 
     //get hrs if within the day, else get time & date posted
     public String getTimestamp() {
-        DateFormat df = new SimpleDateFormat( "EEE MMM dd HH:mm:ss zzz yyyy", Locale.US );
-        Date now = new Date();
-        Date date = null;
-        try {
-            date = df.parse(getCreatedAt().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        long diffInMS = now.getTime() - date.getTime();
-        double diffInHours = diffInMS/3600000;
-        if(diffInHours < 24){
-            return TimeFormatter.getTimeDifference(getCreatedAt().toString());
-        }else{
-            return TimeFormatter.getTimeStamp(getCreatedAt().toString());
-        }
+        return TimeFormatter.getTimeFormatter(getCreatedAt().toString());
     }
-
 
 
     @BindingAdapter("QuestionImage")

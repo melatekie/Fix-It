@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.fixit.databinding.PostDetailBinding;
 import com.example.fixit.fragments.PictureFragment;
 import com.parse.FindCallback;
@@ -53,7 +55,7 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MainActivity.class);
+                Intent i = new Intent(DetailPost.this, LoginActivity.class);
                 startActivity(i);
             }
         });
@@ -64,7 +66,7 @@ public class DetailPost extends AppCompatActivity {
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         currentPost = post;
         Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
-
+        ParseUser currentUser = ParseUser.getCurrentUser();
 
         //On Click to pop out image
         postDetailBinding.ivEnlarge.setOnClickListener(new View.OnClickListener() {
@@ -97,15 +99,64 @@ public class DetailPost extends AppCompatActivity {
 
         postDetailBinding.tvName.setText(user.getFirstName() + " " + user.getLastName());
 
-        /*
-        ParseFile image = post.getImage();
-        if (image != null){
-            Glide.with(this).load(image.getUrl()).into(postDetailBinding.ivProblem);
+
+        //get current user image
+        User user1 = new User();
+        user1.setObjectID(currentUser.getObjectId());
+        user1.setIsProfessional(currentUser.getBoolean("isProfessional"));
+        if(currentUser.getParseFile("profileImage") != null) {
+            user1.setImage(currentUser.getParseFile("profileImage"));
         }
+        User.loadImage(postDetailBinding.ivProfileSelf, user1);
 
-         */
+        /*Professional currentUserProf = new Professional();
+        ParseQuery<Professional> currentProf = ParseQuery.getQuery(Professional.class);
+        currentProf.whereEqualTo(Professional.KEY_USER, currentUser);
+        currentProf.include(Professional.KEY_USER);
+        currentProf.setLimit(1);
+        currentProf.findInBackground(new FindCallback<Professional>() {
+            @Override
+            public void done(List<Professional> prof, ParseException e) {
+                if (e!=null){
+                    return;
+                }
+                currentUserProf.setUser((ParseUser) prof);
+            }
+        });
+        Log.i(TAG,  "Prof: " +currentUserProf.getUser().getObjectId()+" currentUser: "+currentUser.getObjectId());
+
+        //able to see self profile TODO not working for professional
+        postDetailBinding.ivProfileSelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailPost.this, UserProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(currentUser));
+                i.putExtra("ParseUser", Parcels.wrap(user1));
+                //i.putExtra("Professional", Parcels.wrap(currentUserProf));
+                DetailPost.this.startActivity(i);
+            }
+        });*/
 
 
+        //Post creator can set problem to solved/unsolved
+        postDetailBinding.ivSolve.setVisibility(View.INVISIBLE);
+        if(post.getAuthor().getObjectId().equals(currentUser.getObjectId())){
+            postDetailBinding.ivSolve.setVisibility(View.VISIBLE);
+            //checks if post has been solved
+            if(!post.getSolved()){
+                postDetailBinding.ivSolve.setChecked(false);
+                postDetailBinding.ivSolve.setText("UNSOLVED");
+                Log.i(TAG,  "solve is false: " + post.getSolved());
+            }
+            if(post.getSolved()){
+                postDetailBinding.ivSolve.setChecked(true);
+                postDetailBinding.ivSolve.setText("SOLVED");
+                Log.i(TAG,  "solve is true");
+            }
+            solveButton(post);
+
+
+        }
 
 
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +172,7 @@ public class DetailPost extends AppCompatActivity {
                 comment.setUserId(ParseUser.getCurrentUser());
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
-
-
-
+                
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -132,14 +181,17 @@ public class DetailPost extends AppCompatActivity {
                             Log.i(TAG,  e.getMessage());
                         }
                         Log.i(TAG, "Comment save was successful");
-                        post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        if(post.getCommentsCount() != null){
+                            post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                        }else {
+                            post.setCommentsCount(1);
+                        }
+
+                        post.saveInBackground();
                         postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
                         adapter.clear();
                         queryPosts();
-
-                        //fragmentComposeBinding.ivPicture.setImageResource(0);
-                        //pbProgress.setVisibility(ProgressBar.INVISIBLE);                                      //PROGRESS BAR IN PROGRESS
 
                     }
                 });
@@ -164,6 +216,37 @@ public class DetailPost extends AppCompatActivity {
         setLikeListener(post);
 
     }
+
+    //button to set solved or unsolved
+    private void solveButton(Post post) {
+        postDetailBinding.ivSolve.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (isChecked){
+                    postDetailBinding.ivSolve.setChecked(true);
+                    postDetailBinding.ivSolve.setText("SOLVED");
+                    post.setSolved(true);
+                }
+                if(!isChecked){
+                    postDetailBinding.ivSolve.setChecked(false);
+                    postDetailBinding.ivSolve.setText("UNSOLVED");
+                    post.setSolved(false);
+                }
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.i(TAG,  e.getMessage());
+                        }else{
+                            Log.i(TAG,  "Set Solved Field");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 
     private void queryPosts() {
         ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);

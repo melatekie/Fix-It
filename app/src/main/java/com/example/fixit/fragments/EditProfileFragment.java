@@ -1,17 +1,24 @@
 package com.example.fixit.fragments;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.fixit.LoginActivity;
 import com.example.fixit.MainActivity;
 import com.example.fixit.Professional;
 import com.example.fixit.R;
@@ -24,6 +31,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
+
+import static com.parse.ParseUser.logOut;
 
 
 public class EditProfileFragment extends Fragment {
@@ -40,12 +49,18 @@ public class EditProfileFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
+
+
+
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,8 +72,8 @@ public class EditProfileFragment extends Fragment {
         user.setFirstName(currentUser.getString("firstName"));
         user.setLastName(currentUser.getString("lastName"));
         user.setIsProfessional(currentUser.getBoolean("isProfessional"));
-        if(user.getParseFile("profileImage")!=null){
-            user.setImage(user.getParseFile("profileImage"));
+        if(currentUser.getParseFile("profileImage")!=null){
+            user.setImage(currentUser.getParseFile("profileImage"));
         }
         Professional professional  = new Professional();
         user.setObjectID(currentUser.getObjectId());
@@ -84,15 +99,8 @@ public class EditProfileFragment extends Fragment {
             });
         }
 
-
         fragmentEditProfileBinding.setUser(user);
-        fragmentEditProfileBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
+
         fragmentEditProfileBinding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,8 +134,32 @@ public class EditProfileFragment extends Fragment {
                 goMainActivity();
             }
         });
+
+        //logOut button in
+        fragmentEditProfileBinding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.logout:
+                        logOut();
+                        break;
+
+                }
+                return false;
+            }
+        });
+
     }
 
+    private void logOut() {
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+        if (currentUser == null) {
+            Intent i = new Intent(getContext(), LoginActivity.class);
+            startActivity(i);
+            getActivity().finish();
+        }
+    }
     private void saveUser(ParseUser currentUser, String password,  String email) {
         if (currentUser != null) {
             // Other attributes than "email" will remain unchanged!

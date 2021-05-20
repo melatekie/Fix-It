@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -14,14 +15,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.fixit.Comment;
 import com.example.fixit.EndlessRecyclerViewScrollListener;
 import com.example.fixit.Post;
 import com.example.fixit.PostsAdapter;
 import com.example.fixit.R;
+import com.example.fixit.User;
 import com.example.fixit.databinding.FragmentPostsBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +64,32 @@ public class PostsFragment extends Fragment {
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
 
+
         fragmentPostsBinding.rvPosts.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         fragmentPostsBinding.rvPosts.setLayoutManager(layoutManager);
-        //fragmentPostsBinding.rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        //shrinks compose button when scrolled
+        fragmentPostsBinding.rvPosts.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    fragmentPostsBinding.fabCompose.shrink();
+                }else{
+                    fragmentPostsBinding.fabCompose.extend();
+                }
+            }
+        });
+
+        fragmentPostsBinding.fabCompose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComposeFragment composefragment = new ComposeFragment();
+                composefragment.show(getFragmentManager(),"Testing Dialog Fragment!");
+            }
+        });
 
         fragmentPostsBinding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -116,5 +144,6 @@ public class PostsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
     }
 }

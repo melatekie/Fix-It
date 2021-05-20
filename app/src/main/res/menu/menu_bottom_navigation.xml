@@ -12,9 +12,9 @@
         android:title="Edit Profile"
         android:icon="@drawable/profile_edit"
         app:showAsAction="always" />
-    <item
+    <!--item
         android:id="@+id/action_logout"
         android:title="Log Out"
         android:icon="@drawable/home_logout"
-        app:showAsAction="never" />
+        app:showAsAction="never" /-->
 </menu>

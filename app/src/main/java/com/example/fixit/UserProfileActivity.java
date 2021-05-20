@@ -28,8 +28,7 @@ public class UserProfileActivity extends AppCompatActivity {
         activityUserProfileBinding.topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), MainActivity.class);
-                startActivity(i);
+                finish();
             }
         });
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));

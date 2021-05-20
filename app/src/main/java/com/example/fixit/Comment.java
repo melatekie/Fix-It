@@ -11,6 +11,7 @@ public class Comment extends ParseObject {
     public static final String KEY_POSTID = "postId";
     public static final String KEY_USERID = "userId";
     public static final String KEY_COMMENT = "comment";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     //Parceler requirement
     public Comment() {
@@ -35,5 +36,8 @@ public class Comment extends ParseObject {
     public void setComment(String comment) { put(KEY_COMMENT, comment); }
 
 
+    public String getTimestamp() {
+        return TimeFormatter.getTimeDifference(getCreatedAt().toString());
+    }
 }
 

@@ -8,64 +8,94 @@
         <variable
             name="user"
             type="com.example.fixit.User" />
-
+        <variable
+            name="comment"
+            type="com.example.fixit.Comment" />
 
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
         tools:context=".CommentAdapter">
-
-
-        <RelativeLayout android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-
-            android:layout_marginBottom="5dp"
-
-            android:layout_centerHorizontal="true"
-            android:id="@+id/rlComment">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_alignTop="@id/tvComment"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_alignBottom="@id/tvComment"
-                android:scaleType="fitXY"
-                android:src="@drawable/commentbubble" />
-
-            <TextView
-                android:id="@+id/tvComment"
-                android:padding="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                />
-        </RelativeLayout>
-
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="41dp"
-            android:layout_marginLeft="20dp"
-            android:layout_height="42dp"
-            android:layout_below="@+id/rlComment"
-            android:loadImage="@{user}" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:layout_alignBottom="@id/tvTime"
+            android:loadImage="@{user}"
+            tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/tvUsername"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivProfile"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:text="@{user.getKeyUsername()}" />
+            android:backgroundTint="@color/orange_light"
+            android:background="@drawable/comment_bubble"
+            android:padding="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_toEndOf="@id/ivProfile"
+            android:id="@+id/rlComment">
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@{user.getKeyUsername()}"
+                tools:text="username"/>
+            <ImageView
+                android:id="@+id/ivProfCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/tvUsername"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="@{user.getKeyIsProfessional()? View.VISIBLE : View.GONE}"
+                android:src="@drawable/home_check"/>
+            <TextView
+                android:id="@+id/tvComment"
+                android:layout_below="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:autoLink="all"
+                android:linksClickable="true"
+                tools:text="Some comments"
+
+                />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/rlComment"
+            android:layout_toEndOf="@id/ivProfile"
+            android:layout_marginEnd="8dp"
+            tools:text="4 hrs"/>
+        <Button
+            android:id="@+id/btnDelete"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="65dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="-9dp"
+            android:layout_toEndOf="@+id/tvTime"
+            android:layout_below="@+id/rlComment"
+            android:text="Delete"
+            android:textStyle="normal"
+            android:textColor="@color/grey"/>
+
+
+
 
 
     </RelativeLayout>

@@ -69,6 +69,18 @@
                 android:visibility="@{user.getKeyIsProfessional()? View.VISIBLE : View.GONE}"
                 android:src="@drawable/home_check"/>
 
+            <Button
+                android:id="@+id/dropDownMenu"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/transparent"
+                app:icon="@drawable/menu_horizontal"
+                app:iconTint="@color/black"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-14dp"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,6 +125,8 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:text="@{post.getQuestion()}"
+            android:autoLink="all"
+            android:linksClickable="true"
             tools:text="Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing Testing " />
 
 
@@ -141,35 +155,21 @@
                 android:id="@+id/tvLikesCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:text="@{String.valueOf(post.getLikesCount())}"
-                android:visibility="@{post.getLikesCount()!=null ? View.VISIBLE : View.GONE}"
-                tools:text="4" />
-            <TextView
-                android:id="@+id/tvLikesCt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="LIKES"
+                android:text='@{String.valueOf(post.getLikesCount()) +" Likes"}'
                 android:visibility="@{post.getLikesCount()!=null ? View.VISIBLE : View.GONE}"
-                tools:text="LIKES" />
+                tools:text="4 Likes" />
+
 
             <TextView
                 android:id="@+id/tvCommentsCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:text="@{String.valueOf(post.getCommentsCount())}"
-                android:visibility="@{post.getCommentsCount()!=null ? View.VISIBLE : View.GONE}"
-                tools:text="4" />
-            <TextView
-                android:id="@+id/tvCommentsCt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="COMMENTS"
+                android:text='@{String.valueOf(post.getCommentsCount()) +" Comments"}'
                 android:visibility="@{post.getCommentsCount()!=null ? View.VISIBLE : View.GONE}"
-                tools:text="COMMENTS" />
+                tools:text="4 Comments" />
+
 
         </LinearLayout>
         <View
@@ -193,6 +193,8 @@
                 android:layout_height="40dp"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 app:icon="@drawable/heart_outline"
+                app:iconTint="@color/grey"
+                android:textColor="@color/grey"
                 android:text="LIKE" />
             <Button
                 android:id="@+id/btnComment"
@@ -200,7 +202,9 @@
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                app:icon="@drawable/message_outline"
+                app:icon="@drawable/message_light_outline"
+                app:iconTint="@color/grey"
+                android:textColor="@color/grey"
                 android:text=" COMMENT" />
 
             <Button

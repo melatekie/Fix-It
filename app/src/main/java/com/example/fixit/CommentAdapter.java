@@ -1,6 +1,7 @@
 package com.example.fixit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemCommentBinding;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -30,7 +33,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     private Context context;
     private List<Comment> comments;
-
 
     public CommentAdapter(Context context, List<Comment> comments){
         this.context = context;
@@ -51,6 +53,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Comment comment = comments.get(position);
         holder.itemCommentBinding.tvComment.setText(comment.getComment());
+        holder.itemCommentBinding.tvTime.setText(comment.getTimestamp());
         ParseUser parseuser = comment.getUserId();
 
         User user = new User();
@@ -62,11 +65,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         user.setLastName(parseuser.getString(User.KEY_LAST_NAME));
         user.setFirstName(parseuser.getString(User.KEY_FIRST_NAME));
         user.setIsProfessional(parseuser.getBoolean(User.KEY_IS_PROFESSIONAL));
-        itemCommentBinding.setUser(user);
+        holder.itemCommentBinding.setUser(user);
 
 
+        itemCommentBinding.ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, UserProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(user));
+                i.putExtra("ParseUser", Parcels.wrap(parseuser));
+                context.startActivity(i);
+            }
+        });
 
+        //Comments can only be deleted by the creator
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        itemCommentBinding.btnDelete.setVisibility(View.GONE);
+        if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
+            itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
+            deleteComment(comment);
+        }
     }
+
     public void clear() {
         comments.clear();
         notifyDataSetChanged();
@@ -91,6 +111,49 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             this.itemCommentBinding = itemCommentBinding;
         }
 
+
+    }
+
+    //TODO needs to refresh to see the change
+    private void deleteComment(Comment comment) {
+        itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
+                commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
+                    @Override
+                    public void done(Post post, ParseException e) {
+                        if(e != null) {
+                            Log.i(TAG, e.getMessage());
+                            return;
+                        }
+                        Log.i(TAG, "Post: " + post.getCommentsCount());
+                        if(post.getCommentsCount() == null){
+                            return;
+                        }else if(post.getCommentsCount().equals(1)){
+                            post.remove("commentsCount");
+                        }else {
+                            post.increment("commentsCount", -1);
+                        }
+                        post.saveInBackground();
+                        Log.i(TAG, "Post after: " + post.getCommentsCount());
+                    }
+                });
+                comment.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.i(TAG, e.getMessage());
+                            return;
+                        }
+                        Log.i(TAG, "Delete Comment Successful");
+
+
+                    }
+                });
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
