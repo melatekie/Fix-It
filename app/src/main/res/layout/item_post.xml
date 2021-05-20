@@ -69,6 +69,18 @@
                 android:visibility="@{user.getKeyIsProfessional()? View.VISIBLE : View.GONE}"
                 android:src="@drawable/home_check"/>
 
+            <Button
+                android:id="@+id/dropDownMenu"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/transparent"
+                app:icon="@drawable/menu_horizontal"
+                app:iconTint="@color/black"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-14dp"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

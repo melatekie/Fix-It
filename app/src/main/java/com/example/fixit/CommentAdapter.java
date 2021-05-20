@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemCommentBinding;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -66,6 +67,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         user.setIsProfessional(parseuser.getBoolean(User.KEY_IS_PROFESSIONAL));
         holder.itemCommentBinding.setUser(user);
 
+
         itemCommentBinding.ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +78,39 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         });
 
+        //Comments can only be deleted by the creator
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        itemCommentBinding.btnDelete.setVisibility(View.GONE);
+        if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
+            itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
+            deleteComment(comment);
+
+        }
     }
+
+    //TODO deletes the comment but cannot get the postCommentCount for decrement
+    //TODO also needs to refresh to see the change
+    private void deleteComment(Comment comment) {
+        itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comment.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.i(TAG, e.getMessage());
+                            return;
+                        }
+                        Log.i(TAG, "Delete Successful");
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+    }
+
+
     public void clear() {
         comments.clear();
         notifyDataSetChanged();

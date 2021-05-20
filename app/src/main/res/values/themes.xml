@@ -28,10 +28,18 @@
         <!-- Customize TopAppBar Toolbar. -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
 
-
+        <!--Post Popup Menu-->
+        <item name="android:popupMenuStyle">@drawable/custom_popup_background</item>
+        <item name="android:popupBackground">@drawable/custom_popup_background</item>
+        <item name="android:popupElevation">4dp</item>
+        <item name="android:listPreferredItemHeightSmall">35dp</item>
+        <item name="android:listPreferredItemPaddingLeft">5dp</item>
+        <item name="android:listPreferredItemPaddingRight">5dp</item>
 
         
     </style>
+
+
 
     <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
         <item name="textAllCaps">false</item>

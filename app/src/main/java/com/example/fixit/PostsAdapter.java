@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +27,13 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -41,7 +45,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private Context context;
     private List<Post> posts;
     private ItemPostBinding itemPostBinding;
-    private String postQuestion;
 
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
@@ -95,16 +98,36 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
 
-        /*
-        holder.itemPostBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                postQuestion = post.getQuestion().toString();
-                Toast.makeText(context, "postQuestion: " + postQuestion.toString(), Toast.LENGTH_SHORT).show();
-                deletePost(postQuestion);
-            }
-        }); */
+        //Post creator can delete their own posts
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        itemPostBinding.dropDownMenu.setVisibility(View.GONE);
+        if(post.getAuthor().getObjectId().equals(currentUser.getObjectId())) {
+            itemPostBinding.dropDownMenu.setVisibility(View.VISIBLE);
 
+            //dropdown menu for Deleting posts
+            holder.itemPostBinding.dropDownMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(context, view);
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_post, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.action_delete:
+                                    deletePostComments(post);
+                                    notifyDataSetChanged();
+                                    goMainActivity();
+                                    return true;
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
+        }
 
         //set background color change for posts
         if(position % 2 == 0) {
@@ -113,6 +136,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             holder.itemPostBinding.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
 
+    }
+
+    private void goMainActivity() {
+        Intent i = new Intent(context, MainActivity.class);
+        context.startActivity(i);
     }
 
     @Override
@@ -142,34 +170,45 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     }
 
-
-/*
-    private void deletePost(String postQuestion){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("question");
-
-
-        query.whereEqualTo("question", postQuestion);
-        query.findInBackground(new FindCallback<ParseObject>() {
+    private void deletePostComments(Post post) {
+        post.deleteInBackground(new DeleteCallback() {
             @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null){
-                    objects.get(0).deleteInBackground(new DeleteCallback() {
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.i(TAG, e.getMessage());
+                    return;
+                }
+                Log.i(TAG, "Delete Post Successful");
+
+            }
+        });
+        //Gets all comments from post and delete them
+        ParseQuery<Comment> postComment = ParseQuery.getQuery("Comment");
+        postComment.whereEqualTo("postId", post);
+        postComment.findInBackground(new FindCallback<Comment>() {
+            @Override
+            public void done(List<Comment> comments, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, e.getMessage());
+                    return;
+                }
+
+                for (Comment comment: comments){
+                    Log.i(TAG, "Comment: " + comment.getComment());
+                    comment.deleteInBackground(new DeleteCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e == null){
-                                Toast.makeText(context, "Post Deleted", Toast.LENGTH_SHORT).show();
-
-                            } else{
-                                Toast.makeText(context, "Post failed to delete", Toast.LENGTH_SHORT).show();
+                            if (e != null) {
+                                Log.i(TAG, e.getMessage());
+                                return;
                             }
+                            Log.i(TAG, "Delete Comments Successful");
+
                         }
                     });
-                } else{
-                    Toast.makeText(context, "Failed to get object", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    } */
-
+    }
 
 }
