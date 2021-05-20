@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.fixit.databinding.ItemCommentBinding;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
@@ -32,7 +33,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     private Context context;
     private List<Comment> comments;
-
 
     public CommentAdapter(Context context, List<Comment> comments){
         this.context = context;
@@ -84,32 +84,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
             itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
             deleteComment(comment);
-
         }
     }
-
-    //TODO deletes the comment but cannot get the postCommentCount for decrement
-    //TODO also needs to refresh to see the change
-    private void deleteComment(Comment comment) {
-        itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                comment.deleteInBackground(new DeleteCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.i(TAG, e.getMessage());
-                            return;
-                        }
-                        Log.i(TAG, "Delete Successful");
-                        notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-
-    }
-
 
     public void clear() {
         comments.clear();
@@ -135,6 +111,49 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             this.itemCommentBinding = itemCommentBinding;
         }
 
+
+    }
+
+    //TODO needs to refresh to see the change
+    private void deleteComment(Comment comment) {
+        itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
+                commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
+                    @Override
+                    public void done(Post post, ParseException e) {
+                        if(e != null) {
+                            Log.i(TAG, e.getMessage());
+                            return;
+                        }
+                        Log.i(TAG, "Post: " + post.getCommentsCount());
+                        if(post.getCommentsCount() == null){
+                            return;
+                        }else if(post.getCommentsCount().equals(1)){
+                            post.remove("commentsCount");
+                        }else {
+                            post.increment("commentsCount", -1);
+                        }
+                        post.saveInBackground();
+                        Log.i(TAG, "Post after: " + post.getCommentsCount());
+                    }
+                });
+                comment.deleteInBackground(new DeleteCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.i(TAG, e.getMessage());
+                            return;
+                        }
+                        Log.i(TAG, "Delete Comment Successful");
+
+
+                    }
+                });
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
