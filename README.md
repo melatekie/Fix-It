@@ -296,7 +296,13 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 * Cleaned up Compose and added disable/enable conditional 
 * Updated and began comment section 
 
-![p1](https://user-images.githubusercontent.com/77254935/117904584-9d16e680-b29f-11eb-9cbe-31e19e3947ba.gif)![p2](https://user-images.githubusercontent.com/77254935/117904601-a2743100-b29f-11eb-896b-4f06a4cddad6.gif)
+<img src="https://user-images.githubusercontent.com/77254935/117904584-9d16e680-b29f-11eb-9cbe-31e19e3947ba.gif" width=250> <img src="https://user-images.githubusercontent.com/77254935/117904601-a2743100-b29f-11eb-896b-4f06a4cddad6.gif" width=250>
 
 
 ### Sprint 4
+#### Items Completed
+* Detail post with comments
+* Detail post with clickable full image 
+
+#### Walkthrough 
+<img src="https://user-images.githubusercontent.com/37808313/118311155-864ddb00-b4bd-11eb-90c8-4be1e5a208aa.gif" width=250> <img src="https://user-images.githubusercontent.com/77254935/118342839-499cd680-b4f3-11eb-8b7c-0e7775dcacb2.gif" width=250>
