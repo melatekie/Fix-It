@@ -100,9 +100,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         //Post creator can delete their own posts
         ParseUser currentUser = ParseUser.getCurrentUser();
-        itemPostBinding.dropDownMenu.setVisibility(View.GONE);
+        holder.itemPostBinding.dropDownMenu.setVisibility(View.GONE);
         if(post.getAuthor().getObjectId().equals(currentUser.getObjectId())) {
-            itemPostBinding.dropDownMenu.setVisibility(View.VISIBLE);
+            holder.itemPostBinding.dropDownMenu.setVisibility(View.VISIBLE);
 
             //dropdown menu for Deleting posts
             holder.itemPostBinding.dropDownMenu.setOnClickListener(new View.OnClickListener() {
