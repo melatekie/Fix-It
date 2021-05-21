@@ -1,4 +1,4 @@
-App Design Project
+Android App Design Project
 ===
 
 # FIX IT!

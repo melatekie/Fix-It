@@ -119,7 +119,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
+                ParseQuery<Post> commentPost = ParseQuery.getQuery(Post.class);
                 commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
                     @Override
                     public void done(Post post, ParseException e) {
@@ -131,9 +131,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         if(post.getCommentsCount() == null){
                             return;
                         }else if(post.getCommentsCount().equals(1)){
-                            post.remove("commentsCount");
+                            post.remove(Post.KEY_COMMENTS_COUNT);
                         }else {
-                            post.increment("commentsCount", -1);
+                            post.increment(Post.KEY_COMMENTS_COUNT, -1);
                         }
                         post.saveInBackground();
                         Log.i(TAG, "Post after: " + post.getCommentsCount());

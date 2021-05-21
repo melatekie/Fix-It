@@ -183,8 +183,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
         //Gets all comments from post and delete them
-        ParseQuery<Comment> postComment = ParseQuery.getQuery("Comment");
-        postComment.whereEqualTo("postId", post);
+        ParseQuery<Comment> postComment = ParseQuery.getQuery(Comment.class);
+        postComment.whereEqualTo(Comment.KEY_POSTID, post);
         postComment.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> comments, ParseException e) {
