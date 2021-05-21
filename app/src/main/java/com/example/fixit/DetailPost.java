@@ -182,7 +182,7 @@ public class DetailPost extends AppCompatActivity {
                         }
                         Log.i(TAG, "Comment save was successful");
                         if(post.getCommentsCount() != null){
-                            post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                            post.increment(Post.KEY_COMMENTS_COUNT);
                         }else {
                             post.setCommentsCount(1);
                         }
@@ -225,12 +225,12 @@ public class DetailPost extends AppCompatActivity {
 
                 if (isChecked){
                     postDetailBinding.ivSolve.setChecked(true);
-                    postDetailBinding.ivSolve.setText("SOLVED");
+                    postDetailBinding.ivSolve.setText(R.string.solved);
                     post.setSolved(true);
                 }
                 if(!isChecked){
                     postDetailBinding.ivSolve.setChecked(false);
-                    postDetailBinding.ivSolve.setText("UNSOLVED");
+                    postDetailBinding.ivSolve.setText(R.string.unsolved);
                     post.setSolved(false);
                 }
                 post.saveInBackground(new SaveCallback() {
