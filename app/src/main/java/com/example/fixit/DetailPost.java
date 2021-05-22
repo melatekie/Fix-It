@@ -65,7 +65,6 @@ public class DetailPost extends AppCompatActivity {
         User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
         currentPost = post;
-        Comment comment = Parcels.unwrap(getIntent().getParcelableExtra("comment"));
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         //On Click to pop out image
@@ -182,21 +181,27 @@ public class DetailPost extends AppCompatActivity {
                         }
                         Log.i(TAG, "Comment save was successful");
                         if(post.getCommentsCount() != null){
-                            post.setCommentsCount(post.getCommentsCount().intValue()+1);
+                            post.increment("commentsCount", 1);
                         }else {
                             post.setCommentsCount(1);
                         }
+
 
                         post.saveInBackground();
                         postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
                         adapter.clear();
-                        queryPosts();
+                        queryComments();
+                        reloadActivity();
+
+
 
                     }
                 });
 
             }
+
+
         });
 
 
@@ -210,9 +215,7 @@ public class DetailPost extends AppCompatActivity {
                 DetailPost.this.startActivity(i);
             }
         });
-
-
-        queryPosts();
+        queryComments();
         setLikeListener(post);
 
     }
@@ -246,15 +249,20 @@ public class DetailPost extends AppCompatActivity {
             }
         });
     }
+    private void reloadActivity() {
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
 
-
-    private void queryPosts() {
-        ParseQuery<Comment> query = ParseQuery.getQuery(Comment.class);
-        query.whereEqualTo(Comment.KEY_POSTID, currentPost);
-        query.setLimit(10);
-        query.include(Comment.KEY_USERID);
-        query.addDescendingOrder(Comment.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Comment>() {
+    // query top 10 comments related to the selected post
+    private void queryComments() {
+        ParseQuery<Comment> allComments = ParseQuery.getQuery(Comment.class);
+        allComments.whereEqualTo(Comment.KEY_POSTID, currentPost);
+        allComments.setLimit(10);
+        allComments.include(Comment.KEY_USERID);
+        allComments.addDescendingOrder(Comment.KEY_CREATED_AT);
+        allComments.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> comments, ParseException e) {
                 if (e != null){
@@ -265,7 +273,7 @@ public class DetailPost extends AppCompatActivity {
                 for (Comment comment: comments){
                     Log.i(TAG, "Post: " + comment.getComment());
                 }
-                AllComments.addAll(comments);
+                adapter.addAll(comments);
                 adapter.notifyDataSetChanged();
             }
         });

@@ -18,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -30,6 +31,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public static final String TAG = "CommentAdapter";
     private ItemCommentBinding itemCommentBinding;
+
 
     private Context context;
     private List<Comment> comments;
@@ -83,7 +85,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         itemCommentBinding.btnDelete.setVisibility(View.GONE);
         if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
             itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
-            deleteComment(comment);
+            deleteComment(comment, position);
+
         }
     }
 
@@ -115,30 +118,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     //TODO needs to refresh to see the change
-    private void deleteComment(Comment comment) {
+    private void deleteComment(Comment comment, int position) {
         itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
-                commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
-                    @Override
-                    public void done(Post post, ParseException e) {
-                        if(e != null) {
-                            Log.i(TAG, e.getMessage());
-                            return;
-                        }
-                        Log.i(TAG, "Post: " + post.getCommentsCount());
-                        if(post.getCommentsCount() == null){
-                            return;
-                        }else if(post.getCommentsCount().equals(1)){
-                            post.remove("commentsCount");
-                        }else {
-                            post.increment("commentsCount", -1);
-                        }
-                        post.saveInBackground();
-                        Log.i(TAG, "Post after: " + post.getCommentsCount());
-                    }
-                });
+                // Deleting comment in parse database
                 comment.deleteInBackground(new DeleteCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -146,15 +130,55 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                             Log.i(TAG, e.getMessage());
                             return;
                         }
+
+                        // after deleting, update comment count
+                        ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
+                        commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
+                            @Override
+                            public void done(Post post, ParseException e) {
+                                if(e != null) {
+                                    Log.i(TAG, e.getMessage());
+                                    return;
+                                }
+                                Log.i(TAG, "Post: " + post.getCommentsCount());
+                                removeAt(position);
+                                if(post.getCommentsCount() == null){
+                                    return;
+                                }else if(post.getCommentsCount().equals(1)){
+                                    post.remove("commentsCount");
+                                }else {
+                                    post.increment("commentsCount", -1);
+                                }
+                                post.saveInBackground();
+                                Log.i(TAG, "Post after: " + post.getCommentsCount());
+
+                            }
+                        });
                         Log.i(TAG, "Delete Comment Successful");
+                       // Deleting comment in comments
+
 
 
                     }
                 });
-                notifyDataSetChanged();
+
             }
-        });
+            public void removeAt(int position) {
+                comments.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, comments.size());
+
+
+            }
+
+
+
+
+    });
 
     }
+
+
+
 
 }
