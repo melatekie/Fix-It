@@ -80,8 +80,6 @@ public class DetailPost extends AppCompatActivity {
             }
         });
 
-
-
         postDetailBinding.setUser(user);
 
         postDetailBinding.setPost(post);
@@ -95,9 +93,7 @@ public class DetailPost extends AppCompatActivity {
             postDetailBinding.tvCategory.setText(post.getCategory());
 
         //Image with conditional to prevent crash  if  null
-
         postDetailBinding.tvName.setText(user.getFirstName() + " " + user.getLastName());
-
 
         //get current user image
         User user1 = new User();
@@ -153,10 +149,7 @@ public class DetailPost extends AppCompatActivity {
                 Log.i(TAG,  "solve is true");
             }
             solveButton(post);
-
-
         }
-
 
         postDetailBinding.btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +164,6 @@ public class DetailPost extends AppCompatActivity {
                 comment.setUserId(ParseUser.getCurrentUser());
                 comment.setComment(user_input_comment);
                 comment.setPostId(post);
-                
                 comment.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -185,23 +177,16 @@ public class DetailPost extends AppCompatActivity {
                         }else {
                             post.setCommentsCount(1);
                         }
-
-
                         post.saveInBackground();
                         postDetailBinding.tvCommentCount.setText(post.getCommentsCount().toString());
                         postDetailBinding.etComment.setText("");
                         adapter.clear();
                         queryComments();
+                        // reload activity to show the delete button next to the most updated comment
                         reloadActivity();
-
-
-
                     }
                 });
-
             }
-
-
         });
 
 
@@ -326,7 +311,6 @@ public class DetailPost extends AppCompatActivity {
                     }
                 });
                 likeClick = !likeClick;
-
                 Toast.makeText(DetailPost.this,"Liked!", Toast.LENGTH_SHORT).show();
             }
         });

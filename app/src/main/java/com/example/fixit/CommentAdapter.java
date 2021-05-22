@@ -85,7 +85,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         itemCommentBinding.btnDelete.setVisibility(View.GONE);
         if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
             itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
-            deleteComment(comment, position);
+            deleteComment(comment, position, user);
 
         }
     }
@@ -118,7 +118,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     //TODO needs to refresh to see the change
-    private void deleteComment(Comment comment, int position) {
+    private void deleteComment(Comment comment, int position, User user) {
         itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +141,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                                     return;
                                 }
                                 Log.i(TAG, "Post: " + post.getCommentsCount());
-                                removeAt(position);
                                 if(post.getCommentsCount() == null){
                                     return;
                                 }else if(post.getCommentsCount().equals(1)){
@@ -151,13 +150,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                                 }
                                 post.saveInBackground();
                                 Log.i(TAG, "Post after: " + post.getCommentsCount());
+                                Log.i(TAG, "Delete Comment Successful");
 
+                                //delete seleted comment in the list
+                                removeAt(position);
+
+                                // need to reload the activity to update the number of comments above the recyle view
+                                Intent i = new Intent(context, DetailPost.class);
+                                i.putExtra("user",Parcels.wrap(user));
+                                i.putExtra("post", Parcels.wrap(post));
+                                context.startActivity(i);
                             }
                         });
-                        Log.i(TAG, "Delete Comment Successful");
-                       // Deleting comment in comments
-
-
 
                     }
                 });
@@ -167,8 +171,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 comments.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, comments.size());
-
-
             }
 
 
