@@ -103,9 +103,9 @@ public class DetailPost extends AppCompatActivity {
         //get current user image
         User user1 = new User();
         user1.setObjectID(currentUser.getObjectId());
-        user1.setIsProfessional(currentUser.getBoolean("isProfessional"));
-        if(currentUser.getParseFile("profileImage") != null) {
-            user1.setImage(currentUser.getParseFile("profileImage"));
+        user1.setIsProfessional(currentUser.getBoolean(User.KEY_IS_PROFESSIONAL));
+        if(currentUser.getParseFile(User.KEY_PROFILE_IMAGE) != null) {
+            user1.setImage(currentUser.getParseFile(User.KEY_PROFILE_IMAGE));
         }
         User.loadImage(postDetailBinding.ivProfileSelf, user1);
 
@@ -120,7 +120,7 @@ public class DetailPost extends AppCompatActivity {
                 if (e!=null){
                     return;
                 }
-                currentUserProf.setUser((ParseUser) prof);
+                currentUserProf.setObjectId(prof.toString());
             }
         });
         Log.i(TAG,  "Prof: " +currentUserProf.getUser().getObjectId()+" currentUser: "+currentUser.getObjectId());
@@ -130,8 +130,8 @@ public class DetailPost extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DetailPost.this, UserProfileActivity.class);
-                i.putExtra("user", Parcels.wrap(currentUser));
-                i.putExtra("ParseUser", Parcels.wrap(user1));
+                i.putExtra("user", Parcels.wrap(user1));
+                i.putExtra("ParseUser", Parcels.wrap(currentUser));
                 //i.putExtra("Professional", Parcels.wrap(currentUserProf));
                 DetailPost.this.startActivity(i);
             }
@@ -145,12 +145,12 @@ public class DetailPost extends AppCompatActivity {
             //checks if post has been solved
             if(!post.getSolved()){
                 postDetailBinding.ivSolve.setChecked(false);
-                postDetailBinding.ivSolve.setText("UNSOLVED");
+                postDetailBinding.ivSolve.setText(R.string.unsolved);
                 Log.i(TAG,  "solve is false: " + post.getSolved());
             }
             if(post.getSolved()){
                 postDetailBinding.ivSolve.setChecked(true);
-                postDetailBinding.ivSolve.setText("SOLVED");
+                postDetailBinding.ivSolve.setText(R.string.solved);
                 Log.i(TAG,  "solve is true");
             }
             solveButton(post);
