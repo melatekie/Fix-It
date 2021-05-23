@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -49,6 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public PostsAdapter(Context context, List<Post> posts){
         this.context = context;
         this.posts = posts;
+
     }
 
     @NonNull
@@ -136,6 +139,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             holder.itemPostBinding.card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
 
+
     }
 
     private void goMainActivity() {
@@ -183,8 +187,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
         });
         //Gets all comments from post and delete them
-        ParseQuery<Comment> postComment = ParseQuery.getQuery("Comment");
-        postComment.whereEqualTo("postId", post);
+        ParseQuery<Comment> postComment = ParseQuery.getQuery(Comment.class);
+        postComment.whereEqualTo(Comment.KEY_POSTID, post);
         postComment.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> comments, ParseException e) {
@@ -209,6 +213,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 }
             }
         });
+    }
+
+    public void filterList(ArrayList<Post> filteredList) {
+        posts = filteredList;
+        notifyDataSetChanged();
     }
 
 }

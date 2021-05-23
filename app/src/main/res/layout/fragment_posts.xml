@@ -9,18 +9,47 @@
         android:layout_height="wrap_content"
         tools:context=".fragments.PostsFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPosts"
+            android:paddingTop="65dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etSearchLayout"
+            style="@style/Widget.Design.TextInputLayout"
+
+            app:expandedHintEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:placeholderText="Search.."
+            app:placeholderTextColor="@color/grey_50"
+            app:endIconMode="clear_text">
+            <EditText
+                android:id="@+id/search"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+
+
+                android:drawableStart="@drawable/selector_search"
+                android:drawablePadding="12dp"
+                android:background="@drawable/selector_input"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabCompose"

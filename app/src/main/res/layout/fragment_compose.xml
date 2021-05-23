@@ -52,7 +52,7 @@
                 android:src="@drawable/camera_add_outline"
                 app:tint="@color/orange"/>
 
-            <ImageView
+            <!--ImageView
                 android:id="@+id/ivGallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 android:layout_marginEnd="20dp"
 
                 android:layout_toStartOf="@+id/ivCamera"
-                android:src="@drawable/image_add" />
+                android:src="@drawable/image_add" /-->
 
             <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fnLayout"

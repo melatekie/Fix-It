@@ -117,7 +117,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     }
 
-    //TODO needs to refresh to see the change
     private void deleteComment(Comment comment, int position, User user) {
         itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

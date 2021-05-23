@@ -218,7 +218,7 @@
 
                         tools:srcCompat="@tools:sample/avatars" />
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <!--com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/commentLayout"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="250dp"
@@ -226,6 +226,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
                         android:hint="Add a comment..."
+                        app:endIconMode="clear_text"
                         app:startIconDrawable="@null">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -233,8 +234,22 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="2"/>
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout-->
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etComment"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:hint="Add a comment..."
+                        android:drawablePadding="8dp"
+                        android:background="@drawable/selector_input"
+                        android:maxLines="2"/>
 
                     <ImageButton
                         android:id="@+id/btnPost"

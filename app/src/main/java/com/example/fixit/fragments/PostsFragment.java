@@ -1,5 +1,7 @@
 package com.example.fixit.fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,13 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.fixit.Comment;
 import com.example.fixit.EndlessRecyclerViewScrollListener;
+import com.example.fixit.MainActivity;
 import com.example.fixit.Post;
 import com.example.fixit.PostsAdapter;
 import com.example.fixit.R;
@@ -31,6 +41,9 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static com.parse.Parse.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +56,7 @@ public class PostsFragment extends Fragment {
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
     EndlessRecyclerViewScrollListener scrollListener;
+
 
     public PostsFragment() {
         // Required empty public constructor
@@ -88,6 +102,7 @@ public class PostsFragment extends Fragment {
             public void onClick(View v) {
                 ComposeFragment composefragment = new ComposeFragment();
                 composefragment.show(getFragmentManager(),"Testing Dialog Fragment!");
+
             }
         });
 
@@ -115,7 +130,38 @@ public class PostsFragment extends Fragment {
         };
         fragmentPostsBinding.rvPosts.addOnScrollListener(scrollListener);
 
+        fragmentPostsBinding.search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
+
         queryPosts();
+    }
+
+    private void filter(String text){
+        ArrayList<Post> filteredList = new ArrayList<>();
+
+        for(Post post : allPosts) {
+            if (post.getQuestion().toLowerCase().contains(text.toLowerCase()) ||
+                post.getCategory().toLowerCase().contains(text.toLowerCase()) ||
+                post.getAuthor().getUsername().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(post);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 
     private void loadMoreData() {
@@ -146,4 +192,6 @@ public class PostsFragment extends Fragment {
         });
 
     }
+
+
 }

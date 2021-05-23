@@ -8,8 +8,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
 import com.example.fixit.databinding.ActivityMainBinding;
 import com.example.fixit.fragments.ComposeFragment;
@@ -33,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
-        //fabCompose = activityMainBinding.fabCompose;
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         bottomNavigationView = activityMainBinding.bvBottomNavigation;
