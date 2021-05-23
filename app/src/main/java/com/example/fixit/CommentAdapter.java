@@ -131,7 +131,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         }
 
                         // after deleting, update comment count
-                        ParseQuery<Post> commentPost = ParseQuery.getQuery(Post.class);
+                        ParseQuery<Post> commentPost = ParseQuery.getQuery("Post");
                         commentPost.getInBackground(comment.getPostId().getObjectId(), new GetCallback<Post>() {
                             @Override
                             public void done(Post post, ParseException e) {
