@@ -117,6 +117,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_marginRight="250dp"
         android:textSize="16sp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="Company: "
         android:visibility="@{user.getKeyIsProfessional() ? View.VISIBLE : View.GONE}"
          />
