@@ -187,7 +187,7 @@
             android:orientation="horizontal"
             android:layout_below="@+id/llCounts"
             android:layout_marginBottom="35dp">
-            <Button
+            <!--Button
                 android:id="@+id/btnLike"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -195,12 +195,12 @@
                 app:icon="@drawable/heart_outline"
                 app:iconTint="@color/grey"
                 android:textColor="@color/grey"
-                android:text="LIKE" />
+                android:text="LIKE" /-->
             <Button
                 android:id="@+id/btnComment"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 app:icon="@drawable/message_light_outline"
                 app:iconTint="@color/grey"

@@ -9,6 +9,7 @@
     <string-array name="category">
         <item>cleaning</item>
         <item>electrical</item>
+        <item>exterior</item>
         <item>painting</item>
         <item>heating &amp; cooling</item>
         <item>plumbing</item>

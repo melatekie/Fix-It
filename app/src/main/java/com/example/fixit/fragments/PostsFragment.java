@@ -102,6 +102,7 @@ public class PostsFragment extends Fragment {
             public void onClick(View v) {
                 ComposeFragment composefragment = new ComposeFragment();
                 composefragment.show(getFragmentManager(),"Testing Dialog Fragment!");
+
             }
         });
 

@@ -9,48 +9,6 @@
         android:layout_height="wrap_content"
         tools:context=".fragments.PostsFragment">
 
-
-        <!--com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etSearchLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            app:boxCornerRadiusBottomStart="25dp"
-            app:boxCornerRadiusBottomEnd="25dp"
-            app:boxCornerRadiusTopEnd="25dp"
-            app:boxCornerRadiusTopStart="25dp"
-            android:hint="Search..."
-            app:boxStrokeWidthFocused="1dp"
-
-            app:startIconDrawable="@drawable/home_search_outline"
-            app:startIconTint="@color/orange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:endIconMode="clear_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"/>
-        </com.google.android.material.textfield.TextInputLayout-->
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:hint="Search..."
-            android:drawableStart="@drawable/selector_search"
-            android:drawablePadding="12dp"
-            android:inputType="textFilter"
-            android:background="@drawable/selector_input"
-            android:maxLines="1"/>
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
@@ -58,11 +16,40 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvPosts"
-            android:paddingTop="63dp"
+            android:paddingTop="65dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etSearchLayout"
+            style="@style/Widget.Design.TextInputLayout"
+
+            app:expandedHintEnabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:placeholderText="Search.."
+            app:placeholderTextColor="@color/grey_50"
+            app:endIconMode="clear_text">
+            <EditText
+                android:id="@+id/search"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+
+
+                android:drawableStart="@drawable/selector_search"
+                android:drawablePadding="12dp"
+                android:background="@drawable/selector_input"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabCompose"
