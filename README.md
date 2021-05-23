@@ -43,14 +43,14 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - Users can create posts
     - Users can delete their own posts
     - Able to pull down refresh
-    - Able to infinite scroll
+    - Able to infinite scroll 
     - Displays user profile, username, post timestamp, post description, post image, Likes count, Comments count, post solved/unsolved
     - Button to go into Detail Post Activity
     - Profile image gets into user profile
     - Compose button shrinks when scrolled
     - Bottom navigation has options to Home and Edit Profile
     - Professional has verified check icon next to their username
-    - menu to categories
+    - Users can input search text with realtime result of posts. Search areas under username, post description, and category/tag.
 * Edit Profile
     - Users able to edit their information except username, first and last name
     - Displays profile image and data from Database
@@ -74,11 +74,11 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - Displays similar info as Home Activity 
     - Full image button shows a popup with the full image
     - Tag for its category
-    - Current user can reply to post
+    - Current user can reply to post, increments comment count
     - Current user profile image displays next to reply space
     - All related comments are displays for post
     - Replied comments displays user profile image, username, description, time difference
-    - Users can delete their own comments
+    - Users can delete their own comments, also decrements comment count
     
 
 **Optional Nice-to-have Stories**
