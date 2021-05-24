@@ -35,10 +35,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     private Context context;
     private List<Comment> comments;
+    private User postUser;
 
-    public CommentAdapter(Context context, List<Comment> comments){
+    public CommentAdapter(Context context, List<Comment> comments, User postUser){
         this.context = context;
         this.comments = comments;
+        this.postUser = postUser;
     }
 
 
@@ -85,7 +87,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         itemCommentBinding.btnDelete.setVisibility(View.GONE);
         if(comment.getUserId().getObjectId().equals(currentUser.getObjectId())) {
             itemCommentBinding.btnDelete.setVisibility(View.VISIBLE);
-            deleteComment(comment, position, user);
+            deleteComment(comment, position);
 
         }
     }
@@ -117,7 +119,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     }
 
-    private void deleteComment(Comment comment, int position, User user) {
+    private void deleteComment(Comment comment, int position) {
         itemCommentBinding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,7 +158,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
                                 // need to reload the activity to update the number of comments above the recyle view
                                 Intent i = new Intent(context, DetailPost.class);
-                                i.putExtra("user",Parcels.wrap(user));
+                                i.putExtra("user",Parcels.wrap(postUser));
                                 i.putExtra("post", Parcels.wrap(post));
                                 context.startActivity(i);
                             }
