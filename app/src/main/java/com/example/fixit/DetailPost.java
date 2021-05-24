@@ -47,7 +47,9 @@ public class DetailPost extends AppCompatActivity {
         postDetailBinding = DataBindingUtil.setContentView(this,R.layout.post_detail);
 
         AllComments = new ArrayList<>();
-        adapter = new CommentAdapter(this,AllComments);
+        User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+        adapter = new CommentAdapter(this,AllComments, user);
         postDetailBinding.rvComment.setAdapter(adapter);
         postDetailBinding.rvComment.setLayoutManager((new LinearLayoutManager(this)));
 
@@ -62,8 +64,7 @@ public class DetailPost extends AppCompatActivity {
 
 
 
-        User user= Parcels.unwrap(getIntent().getParcelableExtra("user"));
-        Post post = Parcels.unwrap(getIntent().getParcelableExtra("post"));
+
         currentPost = post;
         ParseUser currentUser = ParseUser.getCurrentUser();
 
