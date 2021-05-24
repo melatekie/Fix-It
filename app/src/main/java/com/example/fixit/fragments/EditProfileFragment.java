@@ -58,9 +58,6 @@ public class EditProfileFragment extends Fragment {
     }
 
 
-
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,7 +88,7 @@ public class EditProfileFragment extends Fragment {
 
                         return;
                     }
-
+                    professionalID = professionals.get(0).getObjectId();
                     fragmentEditProfileBinding.setProfessional(professionals.get(0));
 
 
@@ -185,10 +182,10 @@ public class EditProfileFragment extends Fragment {
         startActivity(i);
     }
     private void saveProfessional(String street,String company, String state, String unit, String city, String zipcode, String title, String phone) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Professional");
+        ParseQuery<ParseObject> professional = ParseQuery.getQuery("Professional");
         // Retrieve the object by id
 
-        query.getInBackground(professionalID, (object, e) -> {
+        professional.getInBackground(professionalID, (object, e) -> {
             if (e == null) {
                 //Object was successfully retrieved
                 // Update the fields we want to
