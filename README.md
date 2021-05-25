@@ -2,8 +2,11 @@ Android App Design Project
 ===
 
 # FIX IT!
-
-
+## [Video Demo](https://www.youtube.com/watch?v=noWat9MWYlU)
+## Group Members
+- [Mei Tak Lee](https://github.com/melatekie)
+- [Sheng Dong](https://github.com/sDong517)
+- [Liulan Zheng](https://github.com/liulanz)
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
