@@ -258,15 +258,20 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
             });
         }
         ```
-      - *(Create/POST) Create a new like on a post
-      - *(Delete) Delete existing like
-      - *(Create/POST) Create a new comment on a post
-      - *(Delete) Delete existing comment
+      - (Create/POST) Create a new like on a post
+      - (Delete) Delete existing like
+      - (Create/POST) Create a new comment on a post
+      - (Delete) Delete existing comment
    - Create Post Screen
       - (Create/POST) Create a new post object
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image
+
+## Open-source libraries used
+
+- [Parse](https://www.back4app.com/) - Low code database
+- [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
 
 ## Sprint Progress
 ### Sprint 1
