@@ -85,8 +85,8 @@
         <Button
             android:id="@+id/btnDelete"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="65dp"
-            android:layout_height="35dp"
+            android:layout_width="68dp"
+            android:layout_height="37dp"
             android:layout_marginTop="-9dp"
             android:layout_toEndOf="@+id/tvTime"
             android:layout_below="@+id/rlComment"

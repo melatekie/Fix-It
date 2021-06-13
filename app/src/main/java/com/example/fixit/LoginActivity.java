@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 //Otherwise, proceed to mainActivity
                 goMainActivity();
-                Toast.makeText(LoginActivity.this,"You are now in!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this,"You are now in!", Toast.LENGTH_SHORT).show();
                 return;
             }
         });
