@@ -37,11 +37,15 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - Users log in with their username and password
     - Log in button disabled when username or password are empty
     - Has a button to Sign Up Activity
+    <img src="https://user-images.githubusercontent.com/43690277/121958372-9b728f80-cd31-11eb-8813-fe9d60a748b4.gif" width=250>
+
 * Register
     - Switches between sign up with User or Professional
     - Users can enter to Main Activity immediately after sign up
     - Professionals are brought back to Log In Activity after sign up
     - Goes back to Log In Activity with back button
+    <img src="https://user-images.githubusercontent.com/43690277/121958824-09b75200-cd32-11eb-957b-fcb2a26660b7.gif" width=250>
+
 * Home
     - Users can create posts
     - Users can delete their own posts
@@ -54,13 +58,19 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - Bottom navigation has options to Home and Edit Profile
     - Professional has verified check icon next to their username
     - Users can input search text with realtime result of posts. Search areas under username, post description, and category/tag.
+   <img src="https://user-images.githubusercontent.com/43690277/121962110-484f0b80-cd36-11eb-9bc7-c33bafdab731.gif" width=250>
+
 * Edit Profile
     - Users able to edit their information except username, first and last name
     - Displays profile image and data from Database
     - Log out button in action bar 
+    <img src="https://user-images.githubusercontent.com/43690277/121959441-d1644380-cd32-11eb-925f-02b63c0c781c.gif" width=250>
+
 * Profile (user)
     * Basic information of user 
     * Back button gets back to previous screen
+    <img src="https://user-images.githubusercontent.com/43690277/121959512-e6d96d80-cd32-11eb-953b-fea3d002a691.gif" width=250>
+
 * Profile (professional)
     * Verification of identity
     * Displays rating
@@ -71,6 +81,8 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - Category and descriptions are required information
     - Camera button to take image. Shows image before being saved.
     - Post button disabled if description is empty 
+    <img src="https://user-images.githubusercontent.com/43690277/121959682-19836600-cd33-11eb-916b-6f6428c3f96d.gif" width=250>
+
 * Detail Post
     - Back button takes user back to Home Activity
     - Action bar displays username of post creator and beginning of description
@@ -82,7 +94,7 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
     - All related comments are displays for post
     - Replied comments displays user profile image, username, description, time difference
     - Users can delete their own comments, also decrements comment count
-    
+    <img src="https://user-images.githubusercontent.com/43690277/121959742-2c963600-cd33-11eb-931a-617881efd1da.gif" width=250>
 
 **Optional Nice-to-have Stories**
 * Tips to pop up when open app
