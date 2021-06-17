@@ -285,7 +285,7 @@ An app that gathers homeowners, renters, and professionals to discuss home proje
 
 ## Open-source libraries used
 
-- [Parse](https://www.back4app.com/) - Low code database
+- [Parse](https://www.back4app.com/) - Low code database that offers file storage and authentication
 - [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
 
 ## Sprint Progress
